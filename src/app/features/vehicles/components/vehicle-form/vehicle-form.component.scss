@@ -1,0 +1,171 @@
+@import '../../../../../styles/mixins';
+
+.vehicle-form-container {
+  @include container-padding;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.form-header {
+  @include flex-between;
+  margin-bottom: 24px;
+  
+  h1 {
+    @include typography-headline;
+    margin: 0;
+  }
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
+
+.form-card {
+  @include card-elevation(2);
+}
+
+.vehicle-form {
+  .form-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+    
+    .full-width {
+      flex: 1;
+    }
+  }
+  
+  .photo-section {
+    margin: 32px 0;
+    
+    h3 {
+      margin: 0 0 16px 0;
+      font-size: 18px;
+      font-weight: 500;
+      color: #333;
+    }
+    
+    .photo-upload-area {
+      border: 2px dashed #ddd;
+      border-radius: 8px;
+      padding: 24px;
+      text-align: center;
+      position: relative;
+      transition: border-color 0.3s ease;
+      
+      &:hover {
+        border-color: var(--mat-primary-color);
+      }
+      
+      .photo-preview {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 16px;
+        
+        .preview-image {
+          max-width: 300px;
+          max-height: 200px;
+          border-radius: 8px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .remove-photo-btn {
+          position: absolute;
+          top: -8px;
+          right: -8px;
+          background-color: #f44336;
+          color: white;
+          width: 24px;
+          height: 24px;
+          
+          mat-icon {
+            font-size: 16px;
+          }
+        }
+      }
+      
+      .upload-placeholder {
+        .upload-icon {
+          font-size: 48px;
+          width: 48px;
+          height: 48px;
+          color: #999;
+          margin-bottom: 16px;
+        }
+        
+        p {
+          margin: 8px 0;
+          color: #666;
+          
+          &.upload-hint {
+            font-size: 12px;
+            color: #999;
+          }
+        }
+      }
+      
+      .file-input {
+        display: none;
+      }
+      
+      .upload-btn {
+        margin-top: 16px;
+        
+        mat-icon {
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #eee;
+    
+    button {
+      min-width: 120px;
+      
+      .spinning {
+        animation: spin 1s linear infinite;
+        margin-right: 8px;
+      }
+    }
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@include mobile {
+  .vehicle-form {
+    .form-row {
+      flex-direction: column;
+      gap: 0;
+    }
+    
+    .photo-section .photo-upload-area {
+      padding: 16px;
+      
+      .preview-image {
+        max-width: 100%;
+        max-height: 150px;
+      }
+    }
+    
+    .form-actions {
+      flex-direction: column-reverse;
+      
+      button {
+        width: 100%;
+      }
+    }
+  }
+}

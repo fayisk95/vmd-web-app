@@ -14,6 +14,11 @@
         <mat-icon>inventory</mat-icon>
         <span>Products</span>
       </a>
+      <a mat-list-item routerLink="/vehicles" routerLinkActive="active"
+         *ngIf="(currentUser$ | async)?.role === 'Admin' || (currentUser$ | async)?.role === 'Manager'">
+        <mat-icon>directions_bus</mat-icon>
+        <span>Vehicles</span>
+      </a>
       <a mat-list-item routerLink="/users" routerLinkActive="active"
          *ngIf="(currentUser$ | async)?.role === 'Admin'">
         <mat-icon>people</mat-icon>

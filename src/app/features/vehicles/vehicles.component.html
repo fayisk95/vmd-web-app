@@ -1,0 +1,11 @@
+<div class="vehicles-container">
+  <div class="vehicles-header">
+    <h1>Vehicle Management</h1>
+    <button mat-raised-button color="primary" (click)="onAddVehicle()">
+      <mat-icon>add</mat-icon>
+      Add Vehicle
+    </button>
+  </div>
+
+  <app-vehicle-list [vehicles]="vehicles$ | async"></app-vehicle-list>
+</div>

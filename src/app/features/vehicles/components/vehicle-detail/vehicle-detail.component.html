@@ -1,0 +1,104 @@
+<div class="vehicle-detail-container">
+  <div class="detail-header">
+    <button mat-icon-button (click)="onBack()" matTooltip="Back to Vehicles">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1>Vehicle Details</h1>
+    <button mat-raised-button color="primary" (click)="onEdit()" *ngIf="vehicle">
+      <mat-icon>edit</mat-icon>
+      Edit Vehicle
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading-container">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+
+  <div *ngIf="!loading && vehicle" class="vehicle-details">
+    <div class="detail-grid">
+      <!-- Photo Section -->
+      <mat-card class="photo-card">
+        <mat-card-content>
+          <div class="vehicle-photo">
+            <img *ngIf="vehicle.photo" [src]="vehicle.photo" [alt]="vehicle.vehicleId" class="vehicle-image">
+            <div *ngIf="!vehicle.photo" class="no-photo">
+              <mat-icon class="no-photo-icon">{{ getTypeIcon(vehicle.type) }}</mat-icon>
+              <p>No photo available</p>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Basic Information -->
+      <mat-card class="info-card">
+        <mat-card-header>
+          <mat-card-title>Basic Information</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="info-grid">
+            <div class="info-item">
+              <label>Vehicle ID</label>
+              <span class="value">{{ vehicle.vehicleId }}</span>
+            </div>
+            
+            <div class="info-item">
+              <label>Registration Number</label>
+              <span class="value">{{ vehicle.registrationNo }}</span>
+            </div>
+            
+            <div class="info-item">
+              <label>Type</label>
+              <div class="value type-value">
+                <mat-icon class="type-icon">{{ getTypeIcon(vehicle.type) }}</mat-icon>
+                {{ vehicle.type }}
+              </div>
+            </div>
+            
+            <div class="info-item">
+              <label>Category</label>
+              <mat-chip class="category-chip">{{ vehicle.category }}</mat-chip>
+            </div>
+            
+            <div class="info-item">
+              <label>Seat Count</label>
+              <div class="value seat-value">
+                <mat-icon class="seat-icon">airline_seat_recline_normal</mat-icon>
+                {{ vehicle.seatCount }} seats
+              </div>
+            </div>
+            
+            <div class="info-item">
+              <label>Status</label>
+              <mat-chip 
+                class="status-chip" 
+                [style.background-color]="getStatusColor(vehicle.status)"
+                [style.color]="'white'">
+                {{ vehicle.status }}
+              </mat-chip>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Timestamps -->
+      <mat-card class="timestamps-card">
+        <mat-card-header>
+          <mat-card-title>Record Information</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="info-grid">
+            <div class="info-item">
+              <label>Created At</label>
+              <span class="value">{{ vehicle.createdAt | date:'medium' }}</span>
+            </div>
+            
+            <div class="info-item">
+              <label>Last Updated</label>
+              <span class="value">{{ vehicle.updatedAt | date:'medium' }}</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
