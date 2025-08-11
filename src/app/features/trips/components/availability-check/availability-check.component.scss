@@ -1,0 +1,67 @@
+.availability-check {
+  .check-btn {
+    width: 100%;
+    height: 40px;
+    
+    .spinning {
+      animation: spin 1s linear infinite;
+      margin-right: 8px;
+    }
+    
+    mat-icon {
+      margin-right: 8px;
+    }
+  }
+  
+  .result {
+    margin-top: 12px;
+    
+    .available {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #4caf50;
+      font-size: 14px;
+      
+      mat-icon {
+        font-size: 18px;
+      }
+    }
+    
+    .unavailable {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #f44336;
+      font-size: 14px;
+      
+      mat-icon {
+        font-size: 18px;
+      }
+    }
+    
+    .conflicts {
+      margin-top: 12px;
+      padding: 12px;
+      background-color: #ffebee;
+      border-radius: 4px;
+      
+      h4 {
+        margin: 0 0 8px 0;
+        font-size: 12px;
+        color: #d32f2f;
+      }
+      
+      .conflict-item {
+        font-size: 12px;
+        color: #666;
+        margin-bottom: 4px;
+      }
+    }
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

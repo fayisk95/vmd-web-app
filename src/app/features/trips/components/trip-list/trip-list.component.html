@@ -1,0 +1,155 @@
+<div class="trip-list-container">
+  <!-- Filters Section -->
+  <mat-card class="filters-card">
+    <mat-card-header>
+      <mat-card-title>Filters</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="filterForm" class="filters-form">
+        <div class="filter-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Search</mat-label>
+            <input matInput formControlName="searchTerm" placeholder="Trip ID, Vehicle, Client, Location...">
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status">
+              <mat-option value="">All Statuses</mat-option>
+              <mat-option *ngFor="let status of tripStatuses" [value]="status">
+                {{ status }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>From Date</mat-label>
+            <input matInput [matDatepicker]="fromPicker" formControlName="dateFrom">
+            <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+            <mat-datepicker #fromPicker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>To Date</mat-label>
+            <input matInput [matDatepicker]="toPicker" formControlName="dateTo">
+            <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+            <mat-datepicker #toPicker></mat-datepicker>
+          </mat-form-field>
+
+          <button mat-stroked-button type="button" (click)="clearFilters()" class="clear-filters-btn">
+            <mat-icon>clear</mat-icon>
+            Clear Filters
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Table Section -->
+  <div class="table-container">
+    <div *ngIf="loading" class="loading-container">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" matSort class="trips-table mat-elevation-2" *ngIf="!loading">
+      <!-- Trip ID Column -->
+      <ng-container matColumnDef="tripId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Trip ID</th>
+        <td mat-cell *matCellDef="let trip">
+          <strong>{{ trip.tripId }}</strong>
+        </td>
+      </ng-container>
+
+      <!-- Vehicle ID Column -->
+      <ng-container matColumnDef="vehicleId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Vehicle</th>
+        <td mat-cell *matCellDef="let trip">
+          <div class="vehicle-info">
+            <mat-icon class="vehicle-icon">directions_bus</mat-icon>
+            {{ trip.vehicleId }}
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Client ID Column -->
+      <ng-container matColumnDef="clientId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Client</th>
+        <td mat-cell *matCellDef="let trip">
+          <div class="client-info">
+            <mat-icon class="client-icon">person</mat-icon>
+            {{ trip.clientId }}
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Route Column -->
+      <ng-container matColumnDef="route">
+        <th mat-header-cell *matHeaderCellDef>Route</th>
+        <td mat-cell *matCellDef="let trip">
+          <div class="route-info">
+            <div class="route-text">{{ formatRoute(trip) | truncate:30 }}</div>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Pickup DateTime Column -->
+      <ng-container matColumnDef="pickupDateTime">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Pickup Date/Time</th>
+        <td mat-cell *matCellDef="let trip">
+          <div class="datetime-info">
+            <div class="date">{{ trip.pickupDateTime | date:'MMM dd, yyyy' }}</div>
+            <div class="time">{{ trip.pickupDateTime | date:'HH:mm' }}</div>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Price Column -->
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
+        <td mat-cell *matCellDef="let trip">
+          <div class="price-info">
+            {{ trip.price | currencyFormat }}
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Status Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+        <td mat-cell *matCellDef="let trip">
+          <mat-chip class="status-chip" [style.background-color]="getStatusColor(trip.status)" [style.color]="'white'">
+            {{ trip.status }}
+          </mat-chip>
+        </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let trip">
+          <div class="actions-cell">
+            <button mat-icon-button color="primary" (click)="onView(trip)" matTooltip="View Details">
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button mat-icon-button color="accent" (click)="onEdit(trip)" matTooltip="Edit Trip">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="onDelete(trip)" matTooltip="Delete Trip">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="trip-row"></tr>
+    </table>
+
+    <mat-paginator 
+      [pageSizeOptions]="[5, 10, 25, 50]" 
+      showFirstLastButtons 
+      aria-label="Select page of trips">
+    </mat-paginator>
+  </div>
+</div>

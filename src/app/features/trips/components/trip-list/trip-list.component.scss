@@ -1,0 +1,135 @@
+@import '../../../../../styles/mixins';
+
+.trip-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.filters-card {
+  @include card-elevation(1);
+  
+  .filters-form {
+    .filter-row {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+      
+      mat-form-field {
+        flex: 1;
+        min-width: 200px;
+      }
+      
+      .clear-filters-btn {
+        height: 40px;
+        white-space: nowrap;
+        
+        mat-icon {
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+}
+
+.table-container {
+  @include card-elevation(2);
+  border-radius: 8px;
+  overflow: hidden;
+  
+  .loading-container {
+    padding: 40px;
+    text-align: center;
+  }
+}
+
+.trips-table {
+  width: 100%;
+  
+  .vehicle-info,
+  .client-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    
+    .vehicle-icon,
+    .client-icon {
+      font-size: 16px;
+      color: var(--mat-primary-color);
+    }
+  }
+  
+  .route-info {
+    .route-text {
+      font-size: 14px;
+      line-height: 1.4;
+    }
+  }
+  
+  .datetime-info {
+    .date {
+      font-weight: 500;
+      font-size: 14px;
+    }
+    
+    .time {
+      font-size: 12px;
+      color: #666;
+    }
+  }
+  
+  .price-info {
+    font-weight: 500;
+    color: #2e7d32;
+  }
+  
+  .status-chip {
+    font-size: 11px;
+    font-weight: 500;
+    min-height: 24px;
+  }
+  
+  .actions-cell {
+    display: flex;
+    gap: 4px;
+    
+    button {
+      width: 32px;
+      height: 32px;
+      
+      mat-icon {
+        font-size: 18px;
+      }
+    }
+  }
+  
+  .trip-row {
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.02);
+    }
+  }
+}
+
+@include mobile {
+  .filters-card .filters-form .filter-row {
+    flex-direction: column;
+    align-items: stretch;
+    
+    mat-form-field {
+      min-width: auto;
+    }
+    
+    .clear-filters-btn {
+      width: 100%;
+    }
+  }
+  
+  .table-container {
+    overflow-x: auto;
+  }
+  
+  .trips-table {
+    min-width: 900px;
+  }
+}

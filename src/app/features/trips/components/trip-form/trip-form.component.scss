@@ -1,0 +1,132 @@
+@import '../../../../../styles/mixins';
+
+.trip-form-container {
+  @include container-padding;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.form-header {
+  @include flex-between;
+  margin-bottom: 24px;
+  
+  h1 {
+    @include typography-headline;
+    margin: 0;
+  }
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
+
+.form-card {
+  @include card-elevation(2);
+}
+
+.trip-form {
+  .form-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+    align-items: flex-start;
+    
+    .full-width {
+      flex: 1;
+    }
+    
+    .availability-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      
+      .availability-btn {
+        height: 40px;
+        
+        .spinning {
+          animation: spin 1s linear infinite;
+          margin-right: 8px;
+        }
+        
+        mat-icon {
+          margin-right: 8px;
+        }
+      }
+      
+      .availability-result {
+        .available {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          color: #4caf50;
+          font-size: 14px;
+          
+          mat-icon {
+            font-size: 18px;
+          }
+        }
+        
+        .unavailable {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          color: #f44336;
+          font-size: 14px;
+          
+          mat-icon {
+            font-size: 18px;
+          }
+        }
+      }
+    }
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #eee;
+    
+    button {
+      min-width: 120px;
+      
+      .spinning {
+        animation: spin 1s linear infinite;
+        margin-right: 8px;
+      }
+    }
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@include mobile {
+  .trip-form {
+    .form-row {
+      flex-direction: column;
+      gap: 0;
+      
+      .availability-section {
+        .availability-btn {
+          width: 100%;
+        }
+      }
+    }
+    
+    .form-actions {
+      flex-direction: column-reverse;
+      
+      button {
+        width: 100%;
+      }
+    }
+  }
+}

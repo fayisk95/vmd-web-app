@@ -1,0 +1,11 @@
+<div class="trips-container">
+  <div class="trips-header">
+    <h1>Trip Management</h1>
+    <button mat-raised-button color="primary" (click)="onAddTrip()">
+      <mat-icon>add</mat-icon>
+      Book New Trip
+    </button>
+  </div>
+
+  <app-trip-list [trips]="trips$ | async"></app-trip-list>
+</div>

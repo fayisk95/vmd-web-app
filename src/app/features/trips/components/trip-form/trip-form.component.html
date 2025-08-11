@@ -1,0 +1,130 @@
+<div class="trip-form-container">
+  <div class="form-header">
+    <h1>{{ isEditMode ? 'Edit Trip' : 'Book New Trip' }}</h1>
+    <button mat-icon-button (click)="onCancel()" matTooltip="Cancel">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading-container">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+
+  <mat-card class="form-card" *ngIf="!loading">
+    <mat-card-content>
+      <form [formGroup]="tripForm" (ngSubmit)="onSubmit()" class="trip-form">
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Trip ID</mat-label>
+            <input matInput formControlName="tripId" placeholder="e.g., TRIP-001">
+            <mat-hint>Use format: TRIP-NUMBER (e.g., TRIP-001)</mat-hint>
+            <mat-error>{{ getFieldError('tripId') }}</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status">
+              <mat-option *ngFor="let status of tripStatuses" [value]="status">
+                {{ status }}
+              </mat-option>
+            </mat-select>
+            <mat-error>{{ getFieldError('status') }}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Vehicle</mat-label>
+            <mat-select formControlName="vehicleId">
+              <mat-option *ngFor="let vehicle of vehicles" [value]="vehicle.vehicleId">
+                {{ vehicle.vehicleId }} - {{ vehicle.registrationNo }} ({{ vehicle.type }}, {{ vehicle.seatCount }}
+                seats)
+              </mat-option>
+            </mat-select>
+            <mat-hint>Only available vehicles are shown</mat-hint>
+            <mat-error>{{ getFieldError('vehicleId') }}</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Client</mat-label>
+            <mat-select formControlName="clientId">
+              <mat-option *ngFor="let client of clients" [value]="client.clientId">
+                {{ client.clientId }} - {{ client.name }} ({{ client.company }})
+              </mat-option>
+            </mat-select>
+            <mat-error>{{ getFieldError('clientId') }}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Pickup Location</mat-label>
+            <input matInput formControlName="pickupLocation" placeholder="Enter pickup address">
+            <mat-icon matSuffix>location_on</mat-icon>
+            <mat-error>{{ getFieldError('pickupLocation') }}</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Drop Location</mat-label>
+            <input matInput formControlName="dropLocation" placeholder="Enter drop address">
+            <mat-icon matSuffix>place</mat-icon>
+            <mat-error>{{ getFieldError('dropLocation') }}</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Drop Date/Time</mat-label>
+            <input matInput type="datetime-local" formControlName="dropDateTime">
+            <mat-hint>Select drop date and time</mat-hint>
+            <mat-error>{{ getFieldError('dropDateTime') }}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Price</mat-label>
+            <input matInput type="number" formControlName="price" min="0" step="0.01" placeholder="0.00">
+            <span matPrefix>$&nbsp;</span>
+            <mat-error>{{ getFieldError('price') }}</mat-error>
+          </mat-form-field>
+
+          <div class="availability-section">
+            <button mat-stroked-button type="button" (click)="onCheckAvailability()"
+              [disabled]="availabilityChecking || !tripForm.get('vehicleId')?.value || !tripForm.get('pickupDateTime')?.value"
+              class="availability-btn">
+              <mat-icon *ngIf="availabilityChecking" class="spinning">refresh</mat-icon>
+              <mat-icon *ngIf="!availabilityChecking">check_circle</mat-icon>
+              {{ availabilityChecking ? 'Checking...' : 'Check Availability' }}
+            </button>
+
+            <div *ngIf="availabilityResult" class="availability-result">
+              <div [class]="availabilityResult.available ? 'available' : 'unavailable'">
+                <mat-icon>{{ availabilityResult.available ? 'check_circle' : 'error' }}</mat-icon>
+                {{ availabilityResult.message }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Notes</mat-label>
+            <textarea matInput formControlName="notes" rows="3" placeholder="Additional trip notes..."></textarea>
+            <mat-hint>Optional additional information</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button mat-button type="button" (click)="onCancel()" [disabled]="loading">
+            Cancel
+          </button>
+          <button mat-raised-button color="primary" type="submit"
+            [disabled]="loading || tripForm.invalid || (!isEditMode && !availabilityResult?.available)">
+            <mat-icon *ngIf="loading" class="spinning">refresh</mat-icon>
+            <span *ngIf="!loading">{{ isEditMode ? 'Update Trip' : 'Book Trip' }}</span>
+            <span *ngIf="loading">{{ isEditMode ? 'Updating...' : 'Booking...' }}</span>
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

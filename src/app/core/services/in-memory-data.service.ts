@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 import { Vehicle, VehicleType, VehicleCategory, VehicleStatus } from '../models/vehicle.model';
 import { Client } from '../models/client.model';
+import { Trip, TripStatus } from '../models/trip.model';
 
 @Injectable({
   providedIn: 'root'
@@ -140,6 +141,82 @@ export class InMemoryDataService implements InMemoryDbService {
         updatedAt: new Date('2024-01-16')
       }
     ];
+
+    const trips: Trip[] = [
+      {
+        id: 1,
+        tripId: 'TRIP-001',
+        vehicleId: 'BUS-001',
+        clientId: 'CLI-001',
+        pickupLocation: '123 Main Street, Downtown',
+        dropLocation: '456 Oak Avenue, Uptown',
+        pickupDateTime: new Date('2024-02-15T09:00:00'),
+        dropDateTime: new Date('2024-02-15T17:00:00'),
+        price: 250.00,
+        status: TripStatus.CONFIRMED,
+        notes: 'Corporate event transportation. VIP service required.',
+        createdAt: new Date('2024-02-10T10:30:00'),
+        updatedAt: new Date('2024-02-12T14:20:00')
+      },
+      {
+        id: 2,
+        tripId: 'TRIP-002',
+        vehicleId: 'CAR-001',
+        clientId: 'CLI-002',
+        pickupLocation: '789 Business Plaza, City Center',
+        dropLocation: 'Airport Terminal 1',
+        pickupDateTime: new Date('2024-02-16T06:30:00'),
+        price: 85.00,
+        status: TripStatus.PENDING,
+        notes: 'Early morning airport transfer. Client prefers quiet ride.',
+        createdAt: new Date('2024-02-11T16:45:00'),
+        updatedAt: new Date('2024-02-11T16:45:00')
+      },
+      {
+        id: 3,
+        tripId: 'TRIP-003',
+        vehicleId: 'BUS-002',
+        clientId: 'CLI-003',
+        pickupLocation: 'Convention Center, Hall A',
+        dropLocation: 'Grand Hotel, Conference Room',
+        pickupDateTime: new Date('2024-02-14T08:00:00'),
+        dropDateTime: new Date('2024-02-14T18:00:00'),
+        price: 450.00,
+        status: TripStatus.IN_PROGRESS,
+        notes: 'Conference shuttle service. Multiple stops expected.',
+        createdAt: new Date('2024-02-08T09:15:00'),
+        updatedAt: new Date('2024-02-14T08:05:00')
+      },
+      {
+        id: 4,
+        tripId: 'TRIP-004',
+        vehicleId: 'CAR-002',
+        clientId: 'CLI-004',
+        pickupLocation: 'Residential Area, 321 Pine Street',
+        dropLocation: 'Shopping Mall, Main Entrance',
+        pickupDateTime: new Date('2024-02-13T14:00:00'),
+        dropDateTime: new Date('2024-02-13T16:30:00'),
+        price: 45.00,
+        status: TripStatus.COMPLETED,
+        createdAt: new Date('2024-02-12T11:20:00'),
+        updatedAt: new Date('2024-02-13T16:35:00')
+      },
+      {
+        id: 5,
+        tripId: 'TRIP-005',
+        vehicleId: 'BUS-001',
+        clientId: 'CLI-005',
+        pickupLocation: 'University Campus, Student Center',
+        dropLocation: 'Sports Stadium, Gate 3',
+        pickupDateTime: new Date('2024-02-20T19:00:00'),
+        price: 180.00,
+        status: TripStatus.CANCELLED,
+        notes: 'Event cancelled due to weather conditions.',
+        createdAt: new Date('2024-02-15T13:10:00'),
+        updatedAt: new Date('2024-02-18T10:45:00')
+      }
+    ];
+    
     const dashboard = {
       totalUsers: users.length,
       totalProducts: products.length,
@@ -147,7 +224,7 @@ export class InMemoryDataService implements InMemoryDbService {
       monthlyGrowth: 12.5
     };
 
-    return { users, products, vehicles, clients, dashboard };
+    return { users, products, vehicles, clients, trips, dashboard };
   }
 
   genId(collection: any[]): number {

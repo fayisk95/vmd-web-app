@@ -44,6 +44,12 @@ const routes: Routes = [
     data: { roles: [UserRole.ADMIN, UserRole.MANAGER] }
   },
   {
+    path: 'trips',
+    loadChildren: () => import('./features/trips/trips.module').then(m => m.TripsModule),
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: [UserRole.ADMIN, UserRole.MANAGER] }
+  },
+  {
     path: '**',
     redirectTo: '/auth/login'
   }

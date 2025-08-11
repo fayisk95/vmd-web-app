@@ -1,0 +1,21 @@
+<div class="availability-check">
+  <button mat-stroked-button (click)="onCheck()" [disabled]="loading" class="check-btn">
+    <mat-icon *ngIf="loading" class="spinning">refresh</mat-icon>
+    <mat-icon *ngIf="!loading">check_circle</mat-icon>
+    {{ loading ? 'Checking...' : 'Check Availability' }}
+  </button>
+  
+  <div *ngIf="result" class="result">
+    <div [class]="result.available ? 'available' : 'unavailable'">
+      <mat-icon>{{ result.available ? 'check_circle' : 'error' }}</mat-icon>
+      {{ result.message }}
+    </div>
+    
+    <div *ngIf="!result.available && result.conflictingTrips" class="conflicts">
+      <h4>Conflicting Trips:</h4>
+      <div *ngFor="let trip of result.conflictingTrips" class="conflict-item">
+        <strong>{{ trip.tripId }}</strong> - {{ trip.pickupDateTime | date:'MMM dd, HH:mm' }}
+      </div>
+    </div>
+  </div>
+</div>

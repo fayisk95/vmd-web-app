@@ -1,0 +1,147 @@
+<div class="trip-detail-container">
+  <div class="detail-header">
+    <button mat-icon-button (click)="onBack()" matTooltip="Back to Trips">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1>Trip Details</h1>
+    <button mat-raised-button color="primary" (click)="onEdit()" *ngIf="trip">
+      <mat-icon>edit</mat-icon>
+      Edit Trip
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading-container">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+
+  <div *ngIf="!loading && trip" class="trip-details">
+    <div class="detail-grid">
+      <!-- Trip Information -->
+      <mat-card class="info-card">
+        <mat-card-header>
+          <mat-card-title>Trip Information</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="info-grid">
+            <div class="info-item">
+              <label>Trip ID</label>
+              <span class="value">{{ trip.tripId }}</span>
+            </div>
+            
+            <div class="info-item">
+              <label>Status</label>
+              <mat-chip 
+                class="status-chip" 
+                [style.background-color]="getStatusColor(trip.status)"
+                [style.color]="'white'">
+                {{ trip.status }}
+              </mat-chip>
+            </div>
+            
+            <div class="info-item">
+              <label>Vehicle ID</label>
+              <div class="value vehicle-value">
+                <mat-icon class="vehicle-icon">directions_bus</mat-icon>
+                {{ trip.vehicleId }}
+              </div>
+            </div>
+            
+            <div class="info-item">
+              <label>Client ID</label>
+              <div class="value client-value">
+                <mat-icon class="client-icon">person</mat-icon>
+                {{ trip.clientId }}
+              </div>
+            </div>
+            
+            <div class="info-item">
+              <label>Price</label>
+              <span class="value price-value">{{ trip.price | currencyFormat }}</span>
+            </div>
+            
+            <div class="info-item">
+              <label>Duration</label>
+              <span class="value">{{ calculateDuration() }}</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Route Information -->
+      <mat-card class="route-card">
+        <mat-card-header>
+          <mat-card-title>Route Information</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="route-details">
+            <div class="route-item">
+              <div class="route-icon">
+                <mat-icon class="pickup-icon">location_on</mat-icon>
+              </div>
+              <div class="route-info">
+                <label>Pickup Location</label>
+                <span class="location">{{ trip.pickupLocation }}</span>
+                <div class="datetime">
+                  <mat-icon>schedule</mat-icon>
+                  {{ trip.pickupDateTime | date:'MMM dd, yyyy - HH:mm' }}
+                </div>
+              </div>
+            </div>
+            
+            <div class="route-divider">
+              <mat-icon>arrow_downward</mat-icon>
+            </div>
+            
+            <div class="route-item">
+              <div class="route-icon">
+                <mat-icon class="drop-icon">place</mat-icon>
+              </div>
+              <div class="route-info">
+                <label>Drop Location</label>
+                <span class="location">{{ trip.dropLocation }}</span>
+                <div class="datetime" *ngIf="trip.dropDateTime">
+                  <mat-icon>schedule</mat-icon>
+                  {{ trip.dropDateTime | date:'MMM dd, yyyy - HH:mm' }}
+                </div>
+                <div class="datetime" *ngIf="!trip.dropDateTime">
+                  <mat-icon>schedule</mat-icon>
+                  Open-ended trip
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Notes Section -->
+      <mat-card class="notes-card" *ngIf="trip.notes">
+        <mat-card-header>
+          <mat-card-title>Notes</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p class="notes-content">{{ trip.notes }}</p>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Timestamps -->
+      <mat-card class="timestamps-card">
+        <mat-card-header>
+          <mat-card-title>Record Information</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="info-grid">
+            <div class="info-item">
+              <label>Created At</label>
+              <span class="value">{{ trip.createdAt | date:'medium' }}</span>
+            </div>
+            
+            <div class="info-item">
+              <label>Last Updated</label>
+              <span class="value">{{ trip.updatedAt | date:'medium' }}</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
