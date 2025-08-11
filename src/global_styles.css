@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import './styles/themes.scss';
+@import './styles/mixins.scss';
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--color-background-primary);
+  color: var(--color-text-primary);
+}
+
+// Global utility classes
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.d-flex { display: flex; }
+.d-block { display: block; }
+.d-inline-block { display: inline-block; }
+.d-none { display: none; }
+
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.justify-around { justify-content: space-around; }
+.justify-start { justify-content: flex-start; }
+.justify-end { justify-content: flex-end; }
+
+.align-center { align-items: center; }
+.align-start { align-items: flex-start; }
+.align-end { align-items: flex-end; }
+.align-baseline { align-items: baseline; }
+.align-stretch { align-items: stretch; }
+
+.flex-column { flex-direction: column; }
+.flex-row { flex-direction: row; }
+.flex-wrap { flex-wrap: wrap; }
+.flex-nowrap { flex-wrap: nowrap; }
+
+.w-100 { width: 100%; }
+.h-100 { height: 100%; }
+
+// Spacing utilities
+.m-0 { margin: 0; }
+.m-1 { margin: #{$base-spacing}; }
+.m-2 { margin: #{$base-spacing * 2}; }
+.m-3 { margin: #{$base-spacing * 3}; }
+.m-4 { margin: #{$base-spacing * 4}; }
+
+.p-0 { padding: 0; }
+.p-1 { padding: #{$base-spacing}; }
+.p-2 { padding: #{$base-spacing * 2}; }
+.p-3 { padding: #{$base-spacing * 3}; }
+.p-4 { padding: #{$base-spacing * 4}; }
+
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: #{$base-spacing}; }
+.mt-2 { margin-top: #{$base-spacing * 2}; }
+.mt-3 { margin-top: #{$base-spacing * 3}; }
+.mt-4 { margin-top: #{$base-spacing * 4}; }
+
+.mb-0 { margin-bottom: 0; }
+.mb-1 { margin-bottom: #{$base-spacing}; }
+.mb-2 { margin-bottom: #{$base-spacing * 2}; }
+.mb-3 { margin-bottom: #{$base-spacing * 3}; }
+.mb-4 { margin-bottom: #{$base-spacing * 4}; }
+
+.ml-0 { margin-left: 0; }
+.ml-1 { margin-left: #{$base-spacing}; }
+.ml-2 { margin-left: #{$base-spacing * 2}; }
+.ml-3 { margin-left: #{$base-spacing * 3}; }
+.ml-4 { margin-left: #{$base-spacing * 4}; }
+
+.mr-0 { margin-right: 0; }
+.mr-1 { margin-right: #{$base-spacing}; }
+.mr-2 { margin-right: #{$base-spacing * 2}; }
+.mr-3 { margin-right: #{$base-spacing * 3}; }
+.mr-4 { margin-right: #{$base-spacing * 4}; }
+
+// Responsive utilities
+@include mobile {
+  .d-mobile-none { display: none !important; }
+  .d-mobile-block { display: block !important; }
+  .d-mobile-flex { display: flex !important; }
+}
+
+@include tablet {
+  .d-tablet-none { display: none !important; }
+  .d-tablet-block { display: block !important; }
+  .d-tablet-flex { display: flex !important; }
+}
+
+@include desktop {
+  .d-desktop-none { display: none !important; }
+  .d-desktop-block { display: block !important; }
+  .d-desktop-flex { display: flex !important; }
+}
+
+// Custom scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-divider);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-secondary);
+}

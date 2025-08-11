@@ -1,0 +1,28 @@
+@import '../../../styles/mixins';
+
+.users-container {
+  @include container-padding;
+  
+  h1 {
+    @include typography-headline;
+    margin-bottom: 24px;
+  }
+}
+
+.users-grid {
+  @include responsive-grid(repeat(auto-fit, minmax(300px, 1fr)), 24px);
+}
+
+.user-card {
+  @include card-elevation(2);
+  transition: box-shadow 0.3s ease;
+  
+  &:hover {
+    @include card-elevation(4);
+  }
+  
+  mat-card-actions {
+    display: flex;
+    gap: 8px;
+  }
+}

@@ -1,0 +1,45 @@
+<div class="dashboard-container">
+  <h1>Dashboard</h1>
+  
+  <div *ngIf="loading">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+  
+  <div *ngIf="!loading" class="dashboard-grid">
+    <mat-card class="dashboard-card">
+      <mat-card-header>
+        <mat-card-title>Total Users</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="stat-number">{{ dashboardData.totalUsers }}</div>
+      </mat-card-content>
+    </mat-card>
+    
+    <mat-card class="dashboard-card">
+      <mat-card-header>
+        <mat-card-title>Total Products</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="stat-number">{{ dashboardData.totalProducts }}</div>
+      </mat-card-content>
+    </mat-card>
+    
+    <mat-card class="dashboard-card">
+      <mat-card-header>
+        <mat-card-title>Total Revenue</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="stat-number">{{ dashboardData.totalRevenue | currencyFormat }}</div>
+      </mat-card-content>
+    </mat-card>
+    
+    <mat-card class="dashboard-card">
+      <mat-card-header>
+        <mat-card-title>Monthly Growth</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="stat-number">{{ dashboardData.monthlyGrowth }}%</div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

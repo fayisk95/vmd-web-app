@@ -1,0 +1,42 @@
+@import '../../../styles/mixins';
+
+.products-container {
+  @include container-padding;
+  
+  h1 {
+    @include typography-headline;
+    margin-bottom: 24px;
+  }
+}
+
+.table-controls {
+  margin-bottom: 16px;
+  
+  mat-form-field {
+    width: 300px;
+  }
+}
+
+.table-container {
+  @include card-elevation(2);
+  border-radius: 4px;
+  overflow: hidden;
+  
+  table {
+    width: 100%;
+  }
+  
+  .mat-chip {
+    font-size: 12px;
+  }
+}
+
+@include mobile {
+  .table-container {
+    overflow-x: auto;
+  }
+  
+  .table-controls mat-form-field {
+    width: 100%;
+  }
+}
