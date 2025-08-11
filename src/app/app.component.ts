@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { AuthService } from './core/services/auth.service';
+import { User } from './core/models/user.model';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +18,13 @@ export class AppComponent {
       map(result => result.matches),
       shareReplay()
     );
+  
+  currentUser$: Observable<User | null>;
 
-  constructor(private breakpointObserver: BreakpointObserver) { }
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private authService: AuthService
+  ) {
+    this.currentUser$ = this.authService.currentUser$;
+  }
 }

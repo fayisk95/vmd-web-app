@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './core/guards/auth.guard';
+import { RoleGuard } from './core/guards/role.guard';
+import { UserRole } from './core/models/user.model';
 
 const routes: Routes = [
   {
@@ -8,20 +11,29 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'auth',
+    loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule)
+  },
+  {
     path: 'dashboard',
-    loadChildren: () => import('./features/dashboard/dashboard.module').then(m => m.DashboardModule)
+    loadChildren: () => import('./features/dashboard/dashboard.module').then(m => m.DashboardModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'products',
-    loadChildren: () => import('./features/products/products.module').then(m => m.ProductsModule)
+    loadChildren: () => import('./features/products/products.module').then(m => m.ProductsModule),
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: [UserRole.ADMIN, UserRole.MANAGER] }
   },
   {
     path: 'users',
-    loadChildren: () => import('./features/users/users.module').then(m => m.UsersModule)
+    loadChildren: () => import('./features/users/users.module').then(m => m.UsersModule),
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: [UserRole.ADMIN] }
   },
   {
     path: '**',
-    redirectTo: '/dashboard'
+    redirectTo: '/auth/login'
   }
 ];
 

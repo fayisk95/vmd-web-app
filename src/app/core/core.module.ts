@@ -4,6 +4,10 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { InMemoryDataService } from './services/in-memory-data.service';
 import { ApiService } from './services/api.service';
+import { AuthService } from './services/auth.service';
+import { AuthGuard } from './guards/auth.guard';
+import { RoleGuard } from './guards/role.guard';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [],
@@ -13,12 +17,14 @@ import { ApiService } from './services/api.service';
   providers: [
     InMemoryDataService,
     ApiService,
-    // Add interceptors here if needed
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: YourInterceptor,
-    //   multi: true
-    // }
+    AuthService,
+    AuthGuard,
+    RoleGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ]
 })
 export class CoreModule {

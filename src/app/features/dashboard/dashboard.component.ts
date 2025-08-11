@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { ApiService } from '../../core/services/api.service';
+import { AuthService } from '../../core/services/auth.service';
+import { User, UserRole } from '../../core/models/user.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,8 +12,14 @@ import { ApiService } from '../../core/services/api.service';
 export class DashboardComponent implements OnInit {
   dashboardData: any = {};
   loading = true;
+  currentUser$: Observable<User | null>;
 
-  constructor(private apiService: ApiService) { }
+  constructor(
+    private apiService: ApiService,
+    private authService: AuthService
+  ) {
+    this.currentUser$ = this.authService.currentUser$;
+  }
 
   ngOnInit(): void {
     this.loadDashboardData();
@@ -28,5 +37,18 @@ export class DashboardComponent implements OnInit {
         this.loading = false;
       }
     });
+  }
+  
+  getRoleColor(role: UserRole): string {
+    switch (role) {
+      case UserRole.ADMIN:
+        return '#f44336';
+      case UserRole.MANAGER:
+        return '#ff9800';
+      case UserRole.DRIVER:
+        return '#4caf50';
+      default:
+        return '#666';
+    }
   }
 }

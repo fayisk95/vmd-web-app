@@ -9,11 +9,13 @@
         <mat-icon>dashboard</mat-icon>
         <span>Dashboard</span>
       </a>
-      <a mat-list-item routerLink="/products" routerLinkActive="active">
+      <a mat-list-item routerLink="/products" routerLinkActive="active" 
+         *ngIf="(currentUser$ | async)?.role === 'Admin' || (currentUser$ | async)?.role === 'Manager'">
         <mat-icon>inventory</mat-icon>
         <span>Products</span>
       </a>
-      <a mat-list-item routerLink="/users" routerLinkActive="active">
+      <a mat-list-item routerLink="/users" routerLinkActive="active"
+         *ngIf="(currentUser$ | async)?.role === 'Admin'">
         <mat-icon>people</mat-icon>
         <span>Users</span>
       </a>
@@ -32,9 +34,7 @@
       </button>
       <span>{{ title }}</span>
       <span class="spacer"></span>
-      <button mat-icon-button>
-        <mat-icon>account_circle</mat-icon>
-      </button>
+      <app-user-menu></app-user-menu>
     </mat-toolbar>
     
     <main class="main-content">

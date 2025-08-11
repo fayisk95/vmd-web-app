@@ -22,6 +22,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
 
 // CDK Modules
 import { LayoutModule } from '@angular/cdk/layout';
@@ -29,6 +31,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 // Custom Components
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { UserMenuComponent } from './components/user-menu/user-menu.component';
 
 // Custom Directives
 import { HighlightDirective } from './directives/highlight.directive';
@@ -57,12 +60,15 @@ const MATERIAL_MODULES = [
   MatDatepickerModule,
   MatNativeDateModule,
   MatCheckboxModule,
+  MatMenuModule,
+  MatDividerModule,
   LayoutModule
 ];
 
 const COMPONENTS = [
   LoadingSpinnerComponent,
-  ConfirmDialogComponent
+  ConfirmDialogComponent,
+  UserMenuComponent
 ];
 
 const DIRECTIVES = [
