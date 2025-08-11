@@ -1,0 +1,111 @@
+<div class="client-list-container">
+  <!-- Filters Section -->
+  <mat-card class="filters-card">
+    <mat-card-header>
+      <mat-card-title>Filters</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="filterForm" class="filters-form">
+        <div class="filter-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Search</mat-label>
+            <input matInput formControlName="searchTerm" placeholder="Client ID, Name, Email, etc.">
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Company</mat-label>
+            <mat-select formControlName="company">
+              <mat-option value="">All Companies</mat-option>
+              <mat-option *ngFor="let company of getUniqueCompanies()" [value]="company">
+                {{ company }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <button mat-stroked-button type="button" (click)="clearFilters()" class="clear-filters-btn">
+            <mat-icon>clear</mat-icon>
+            Clear Filters
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Table Section -->
+  <div class="table-container">
+    <div *ngIf="loading" class="loading-container">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" matSort class="clients-table mat-elevation-2" *ngIf="!loading">
+      <!-- Client ID Column -->
+      <ng-container matColumnDef="clientId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Client ID</th>
+        <td mat-cell *matCellDef="let client">
+          <strong>{{ client.clientId }}</strong>
+        </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <td mat-cell *matCellDef="let client">{{ client.name }}</td>
+      </ng-container>
+
+      <!-- Email Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+        <td mat-cell *matCellDef="let client">
+          <a [href]="'mailto:' + client.email" class="email-link">{{ client.email }}</a>
+        </td>
+      </ng-container>
+
+      <!-- Company Column -->
+      <ng-container matColumnDef="company">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Company</th>
+        <td mat-cell *matCellDef="let client">
+          <mat-chip class="company-chip">{{ client.company }}</mat-chip>
+        </td>
+      </ng-container>
+
+      <!-- Contact Details Column -->
+      <ng-container matColumnDef="contactDetails">
+        <th mat-header-cell *matHeaderCellDef>Contact Details</th>
+        <td mat-cell *matCellDef="let client">
+          <div class="contact-details">
+            <mat-icon class="contact-icon">phone</mat-icon>
+            {{ client.contactDetails | truncate:20 }}
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let client">
+          <div class="actions-cell">
+            <button mat-icon-button color="primary" (click)="onView(client)" matTooltip="View Details">
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button mat-icon-button color="accent" (click)="onEdit(client)" matTooltip="Edit Client">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="onDelete(client)" matTooltip="Delete Client">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="client-row"></tr>
+    </table>
+
+    <mat-paginator 
+      [pageSizeOptions]="[5, 10, 25, 50]" 
+      showFirstLastButtons 
+      aria-label="Select page of clients">
+    </mat-paginator>
+  </div>
+</div>

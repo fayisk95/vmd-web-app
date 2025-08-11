@@ -1,0 +1,93 @@
+<div class="client-detail-container">
+  <div class="detail-header">
+    <button mat-icon-button (click)="onBack()" matTooltip="Back to Clients">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1>Client Details</h1>
+    <button mat-raised-button color="primary" (click)="onEdit()" *ngIf="client">
+      <mat-icon>edit</mat-icon>
+      Edit Client
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading-container">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+
+  <div *ngIf="!loading && client" class="client-details">
+    <div class="detail-grid">
+      <!-- Basic Information -->
+      <mat-card class="info-card">
+        <mat-card-header>
+          <mat-card-title>Basic Information</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="info-grid">
+            <div class="info-item">
+              <label>Client ID</label>
+              <span class="value">{{ client.clientId }}</span>
+            </div>
+            
+            <div class="info-item">
+              <label>Name</label>
+              <span class="value">{{ client.name }}</span>
+            </div>
+            
+            <div class="info-item">
+              <label>Company</label>
+              <mat-chip class="company-chip">{{ client.company }}</mat-chip>
+            </div>
+            
+            <div class="info-item">
+              <label>Email</label>
+              <div class="value email-value">
+                <a [href]="'mailto:' + client.email" class="email-link">{{ client.email }}</a>
+                <button mat-icon-button (click)="sendEmail()" matTooltip="Send Email">
+                  <mat-icon>email</mat-icon>
+                </button>
+              </div>
+            </div>
+            
+            <div class="info-item full-width">
+              <label>Contact Details</label>
+              <div class="value contact-value">
+                <mat-icon class="contact-icon">phone</mat-icon>
+                {{ client.contactDetails }}
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Notes Section -->
+      <mat-card class="notes-card" *ngIf="client.notes">
+        <mat-card-header>
+          <mat-card-title>Notes</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p class="notes-content">{{ client.notes }}</p>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Timestamps -->
+      <mat-card class="timestamps-card">
+        <mat-card-header>
+          <mat-card-title>Record Information</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="info-grid">
+            <div class="info-item">
+              <label>Created At</label>
+              <span class="value">{{ client.createdAt | date:'medium' }}</span>
+            </div>
+            
+            <div class="info-item">
+              <label>Last Updated</label>
+              <span class="value">{{ client.updatedAt | date:'medium' }}</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

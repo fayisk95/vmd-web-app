@@ -1,0 +1,79 @@
+<div class="client-form-container">
+  <div class="form-header">
+    <h1>{{ isEditMode ? 'Edit Client' : 'Add New Client' }}</h1>
+    <button mat-icon-button (click)="onCancel()" matTooltip="Cancel">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading-container">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+
+  <mat-card class="form-card" *ngIf="!loading">
+    <mat-card-content>
+      <form [formGroup]="clientForm" (ngSubmit)="onSubmit()" class="client-form">
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Client ID</mat-label>
+            <input matInput formControlName="clientId" placeholder="e.g., CLI-001">
+            <mat-hint>Use format: CLI-NUMBER (e.g., CLI-001)</mat-hint>
+            <mat-error>{{ getFieldError('clientId') }}</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" placeholder="Client full name">
+            <mat-error>{{ getFieldError('name') }}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email" placeholder="client@example.com">
+            <mat-icon matSuffix>email</mat-icon>
+            <mat-error>{{ getFieldError('email') }}</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Company</mat-label>
+            <input matInput formControlName="company" placeholder="Company name">
+            <mat-icon matSuffix>business</mat-icon>
+            <mat-error>{{ getFieldError('company') }}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Contact Details</mat-label>
+            <input matInput formControlName="contactDetails" placeholder="Phone number, address, etc.">
+            <mat-icon matSuffix>phone</mat-icon>
+            <mat-hint>Phone number, address, or other contact information</mat-hint>
+            <mat-error>{{ getFieldError('contactDetails') }}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Notes</mat-label>
+            <textarea matInput formControlName="notes" rows="4" placeholder="Additional notes about the client..."></textarea>
+            <mat-hint>Optional additional information</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button mat-button type="button" (click)="onCancel()" [disabled]="loading">
+            Cancel
+          </button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="loading || clientForm.invalid">
+            <mat-icon *ngIf="loading" class="spinning">refresh</mat-icon>
+            <span *ngIf="!loading">{{ isEditMode ? 'Update Client' : 'Create Client' }}</span>
+            <span *ngIf="loading">{{ isEditMode ? 'Updating...' : 'Creating...' }}</span>
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

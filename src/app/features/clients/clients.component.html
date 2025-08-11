@@ -1,0 +1,11 @@
+<div class="clients-container">
+  <div class="clients-header">
+    <h1>Client Management</h1>
+    <button mat-raised-button color="primary" (click)="onAddClient()">
+      <mat-icon>add</mat-icon>
+      Add Client
+    </button>
+  </div>
+
+  <app-client-list [clients]="clients$ | async"></app-client-list>
+</div>

@@ -1,49 +1,62 @@
-<mat-sidenav-container class="sidenav-container" [class.is-mobile]="isHandset$ | async">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="(isHandset$ | async) === false">
-    <mat-toolbar>Menu</mat-toolbar>
-    <mat-nav-list>
-      <a mat-list-item routerLink="/dashboard" routerLinkActive="active">
-        <mat-icon>dashboard</mat-icon>
-        <span>Dashboard</span>
-      </a>
-      <a mat-list-item routerLink="/products" routerLinkActive="active" 
-         *ngIf="(currentUser$ | async)?.role === 'Admin' || (currentUser$ | async)?.role === 'Manager'">
-        <mat-icon>inventory</mat-icon>
-        <span>Products</span>
-      </a>
-      <a mat-list-item routerLink="/vehicles" routerLinkActive="active"
-         *ngIf="(currentUser$ | async)?.role === 'Admin' || (currentUser$ | async)?.role === 'Manager'">
-        <mat-icon>directions_bus</mat-icon>
-        <span>Vehicles</span>
-      </a>
-      <a mat-list-item routerLink="/users" routerLinkActive="active"
-         *ngIf="(currentUser$ | async)?.role === 'Admin'">
-        <mat-icon>people</mat-icon>
-        <span>Users</span>
-      </a>
-    </mat-nav-list>
-  </mat-sidenav>
-  
-  <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()"
-        *ngIf="isHandset$ | async">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
-      <span>{{ title }}</span>
-      <span class="spacer"></span>
-      <app-user-menu></app-user-menu>
-    </mat-toolbar>
+<div *ngIf="currentUser$ | async; else authView">
+  <mat-sidenav-container class="sidenav-container" [class.is-mobile]="isHandset$ | async">
+    <mat-sidenav #drawer class="sidenav" fixedInViewport
+        [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+        [mode]="(isHandset$ | async) ? 'over' : 'side'"
+        [opened]="(isHandset$ | async) === false">
+      <mat-toolbar>Menu</mat-toolbar>
+      <mat-nav-list>
+        <a mat-list-item routerLink="/dashboard" routerLinkActive="active">
+          <mat-icon>dashboard</mat-icon>
+          <span>Dashboard</span>
+        </a>
+        <a mat-list-item routerLink="/products" routerLinkActive="active" 
+           *ngIf="(currentUser$ | async)?.role === 'Admin' || (currentUser$ | async)?.role === 'Manager'">
+          <mat-icon>inventory</mat-icon>
+          <span>Products</span>
+        </a>
+        <a mat-list-item routerLink="/vehicles" routerLinkActive="active"
+           *ngIf="(currentUser$ | async)?.role === 'Admin' || (currentUser$ | async)?.role === 'Manager'">
+          <mat-icon>directions_bus</mat-icon>
+          <span>Vehicles</span>
+        </a>
+        <a mat-list-item routerLink="/clients" routerLinkActive="active"
+           *ngIf="(currentUser$ | async)?.role === 'Admin' || (currentUser$ | async)?.role === 'Manager'">
+          <mat-icon>people_outline</mat-icon>
+          <span>Clients</span>
+        </a>
+        <a mat-list-item routerLink="/users" routerLinkActive="active"
+           *ngIf="(currentUser$ | async)?.role === 'Admin'">
+          <mat-icon>people</mat-icon>
+          <span>Users</span>
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
     
-    <main class="main-content">
-      <router-outlet></router-outlet>
-    </main>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+    <mat-sidenav-content>
+      <mat-toolbar color="primary">
+        <button
+          type="button"
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          (click)="drawer.toggle()"
+          *ngIf="isHandset$ | async">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+        <span>{{ title }}</span>
+        <span class="spacer"></span>
+        <app-user-menu></app-user-menu>
+      </mat-toolbar>
+      
+      <main class="main-content">
+        <router-outlet></router-outlet>
+      </main>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+
+<ng-template #authView>
+  <div class="auth-only-view">
+    <router-outlet></router-outlet>
+  </div>
+</ng-template>

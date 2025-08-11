@@ -38,6 +38,12 @@ const routes: Routes = [
     data: { roles: [UserRole.ADMIN, UserRole.MANAGER] }
   },
   {
+    path: 'clients',
+    loadChildren: () => import('./features/clients/clients.module').then(m => m.ClientsModule),
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: [UserRole.ADMIN, UserRole.MANAGER] }
+  },
+  {
     path: '**',
     redirectTo: '/auth/login'
   }

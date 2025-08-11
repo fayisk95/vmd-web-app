@@ -29,6 +29,7 @@ export class DashboardComponent implements OnInit {
     this.loading = true;
     this.apiService.getById('dashboard', 1).subscribe({
       next: (data) => {
+        console.log(data)
         this.dashboardData = data;
         this.loading = false;
       },
@@ -38,7 +39,7 @@ export class DashboardComponent implements OnInit {
       }
     });
   }
-  
+
   getRoleColor(role: UserRole): string {
     switch (role) {
       case UserRole.ADMIN:

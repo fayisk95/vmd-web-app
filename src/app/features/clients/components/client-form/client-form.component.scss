@@ -1,0 +1,79 @@
+@import '../../../../../styles/mixins';
+
+.client-form-container {
+  @include container-padding;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.form-header {
+  @include flex-between;
+  margin-bottom: 24px;
+  
+  h1 {
+    @include typography-headline;
+    margin: 0;
+  }
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
+
+.form-card {
+  @include card-elevation(2);
+}
+
+.client-form {
+  .form-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+    
+    .full-width {
+      flex: 1;
+    }
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #eee;
+    
+    button {
+      min-width: 120px;
+      
+      .spinning {
+        animation: spin 1s linear infinite;
+        margin-right: 8px;
+      }
+    }
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@include mobile {
+  .client-form {
+    .form-row {
+      flex-direction: column;
+      gap: 0;
+    }
+    
+    .form-actions {
+      flex-direction: column-reverse;
+      
+      button {
+        width: 100%;
+      }
+    }
+  }
+}

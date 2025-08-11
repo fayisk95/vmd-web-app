@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 import { Vehicle, VehicleType, VehicleCategory, VehicleStatus } from '../models/vehicle.model';
+import { Client } from '../models/client.model';
 
 @Injectable({
   providedIn: 'root'
@@ -83,6 +84,62 @@ export class InMemoryDataService implements InMemoryDbService {
       }
     ];
 
+    const clients: Client[] = [
+      {
+        id: 1,
+        clientId: 'CLI-001',
+        name: 'John Smith',
+        contactDetails: '+1 (555) 123-4567',
+        company: 'Tech Solutions Inc.',
+        email: 'john.smith@techsolutions.com',
+        notes: 'Preferred client with multiple ongoing projects. Always pays on time.',
+        createdAt: new Date('2024-01-10'),
+        updatedAt: new Date('2024-01-15')
+      },
+      {
+        id: 2,
+        clientId: 'CLI-002',
+        name: 'Sarah Johnson',
+        contactDetails: '+1 (555) 987-6543',
+        company: 'Marketing Pro LLC',
+        email: 'sarah.johnson@marketingpro.com',
+        notes: 'Requires detailed reports and regular updates on project progress.',
+        createdAt: new Date('2024-01-12'),
+        updatedAt: new Date('2024-01-18')
+      },
+      {
+        id: 3,
+        clientId: 'CLI-003',
+        name: 'Michael Brown',
+        contactDetails: '+1 (555) 456-7890',
+        company: 'Global Enterprises',
+        email: 'michael.brown@globalent.com',
+        notes: 'Large corporate client with strict compliance requirements.',
+        createdAt: new Date('2024-01-08'),
+        updatedAt: new Date('2024-01-20')
+      },
+      {
+        id: 4,
+        clientId: 'CLI-004',
+        name: 'Emily Davis',
+        contactDetails: '+1 (555) 321-0987',
+        company: 'Creative Studio',
+        email: 'emily.davis@creativestudio.com',
+        notes: 'Focus on creative and innovative solutions. Flexible with timelines.',
+        createdAt: new Date('2024-01-14'),
+        updatedAt: new Date('2024-01-22')
+      },
+      {
+        id: 5,
+        clientId: 'CLI-005',
+        name: 'Robert Wilson',
+        contactDetails: '+1 (555) 654-3210',
+        company: 'Wilson & Associates',
+        email: 'robert.wilson@wilsonassoc.com',
+        createdAt: new Date('2024-01-16'),
+        updatedAt: new Date('2024-01-16')
+      }
+    ];
     const dashboard = {
       totalUsers: users.length,
       totalProducts: products.length,
@@ -90,7 +147,7 @@ export class InMemoryDataService implements InMemoryDbService {
       monthlyGrowth: 12.5
     };
 
-    return { users, products, vehicles, dashboard };
+    return { users, products, vehicles, clients, dashboard };
   }
 
   genId(collection: any[]): number {
