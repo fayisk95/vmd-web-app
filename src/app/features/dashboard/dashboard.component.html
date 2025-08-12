@@ -17,45 +17,24 @@
     </mat-card>
   </div>
   
-  <div *ngIf="loading">
-    <app-loading-spinner></app-loading-spinner>
+  <!-- Dashboard Stats -->
+  <app-dashboard-stats [stats]="dashboardStats" [loading]="loading"></app-dashboard-stats>
+  
+  <!-- Charts Section -->
+  <app-dashboard-charts></app-dashboard-charts>
+  
+  <!-- Vehicle Availability Calendar -->
+  <div class="calendar-section">
+    <h2>Vehicle Availability Calendar</h2>
+    <app-vehicle-availability-calendar 
+      [calendarData]="calendarData"
+      [loading]="calendarLoading"
+      (dateRangeChange)="onDateRangeChange($event)"
+      (filtersChange)="onFiltersChange($event)">
+    </app-vehicle-availability-calendar>
   </div>
   
-  <div *ngIf="!loading" class="dashboard-grid">
-    <mat-card class="dashboard-card">
-      <mat-card-header>
-        <mat-card-title>Total Users</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <div class="stat-number">{{ dashboardData.totalUsers }}</div>
-      </mat-card-content>
-    </mat-card>
-    
-    <mat-card class="dashboard-card">
-      <mat-card-header>
-        <mat-card-title>Total Products</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <div class="stat-number">{{ dashboardData.totalProducts }}</div>
-      </mat-card-content>
-    </mat-card>
-    
-    <mat-card class="dashboard-card">
-      <mat-card-header>
-        <mat-card-title>Total Revenue</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <div class="stat-number">{{ dashboardData.totalRevenue | currencyFormat }}</div>
-      </mat-card-content>
-    </mat-card>
-    
-    <mat-card class="dashboard-card">
-      <mat-card-header>
-        <mat-card-title>Monthly Growth</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <div class="stat-number">{{ dashboardData.monthlyGrowth }}%</div>
-      </mat-card-content>
-    </mat-card>
+  <div *ngIf="loading && !dashboardStats" class="initial-loading">
+    <app-loading-spinner></app-loading-spinner>
   </div>
 </div>

@@ -1,0 +1,33 @@
+@import '../../../../../styles/mixins';
+
+.charts-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.chart-card {
+  @include card-elevation(2);
+  
+  .chart-wrapper {
+    height: 300px;
+    position: relative;
+    
+    canvas {
+      max-height: 100%;
+    }
+  }
+}
+
+@include tablet {
+  .charts-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+@include mobile {
+  .chart-card .chart-wrapper {
+    height: 250px;
+  }
+}

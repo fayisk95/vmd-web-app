@@ -1,0 +1,119 @@
+<div class="stats-grid">
+  <mat-card class="stat-card total-vehicles">
+    <mat-card-content>
+      <div class="stat-content">
+        <div class="stat-icon">
+          <mat-icon>directions_bus</mat-icon>
+        </div>
+        <div class="stat-info">
+          <div class="stat-value">{{ stats?.totalVehicles || 0 }}</div>
+          <div class="stat-label">Total Vehicles</div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="stat-card available-vehicles">
+    <mat-card-content>
+      <div class="stat-content">
+        <div class="stat-icon available">
+          <mat-icon>check_circle</mat-icon>
+        </div>
+        <div class="stat-info">
+          <div class="stat-value">{{ stats?.availableVehicles || 0 }}</div>
+          <div class="stat-label">Available</div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="stat-card in-use-vehicles">
+    <mat-card-content>
+      <div class="stat-content">
+        <div class="stat-icon in-use">
+          <mat-icon>local_shipping</mat-icon>
+        </div>
+        <div class="stat-info">
+          <div class="stat-value">{{ stats?.inUseVehicles || 0 }}</div>
+          <div class="stat-label">In Use</div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="stat-card maintenance-vehicles">
+    <mat-card-content>
+      <div class="stat-content">
+        <div class="stat-icon maintenance">
+          <mat-icon>build</mat-icon>
+        </div>
+        <div class="stat-info">
+          <div class="stat-value">{{ stats?.maintenanceVehicles || 0 }}</div>
+          <div class="stat-label">Maintenance</div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="stat-card availability-rate">
+    <mat-card-content>
+      <div class="stat-content">
+        <div class="stat-icon" [style.color]="getAvailabilityColor()">
+          <mat-icon>{{ getAvailabilityIcon() }}</mat-icon>
+        </div>
+        <div class="stat-info">
+          <div class="stat-value" [style.color]="getAvailabilityColor()">
+            {{ stats?.availabilityRate || 0 }}%
+          </div>
+          <div class="stat-label">Availability Rate</div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="stat-card utilization-rate">
+    <mat-card-content>
+      <div class="stat-content">
+        <div class="stat-icon" [style.color]="getUtilizationColor()">
+          <mat-icon>speed</mat-icon>
+        </div>
+        <div class="stat-info">
+          <div class="stat-value" [style.color]="getUtilizationColor()">
+            {{ stats?.utilizationRate || 0 }}%
+          </div>
+          <div class="stat-label">Utilization Rate</div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="stat-card revenue">
+    <mat-card-content>
+      <div class="stat-content">
+        <div class="stat-icon revenue">
+          <mat-icon>attach_money</mat-icon>
+        </div>
+        <div class="stat-info">
+          <div class="stat-value">{{ stats?.totalRevenue | currencyFormat }}</div>
+          <div class="stat-label">Total Revenue</div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="stat-card growth">
+    <mat-card-content>
+      <div class="stat-content">
+        <div class="stat-icon" [style.color]="getGrowthColor()">
+          <mat-icon>{{ getGrowthIcon() }}</mat-icon>
+        </div>
+        <div class="stat-info">
+          <div class="stat-value" [style.color]="getGrowthColor()">
+            {{ stats?.monthlyGrowth || 0 }}%
+          </div>
+          <div class="stat-label">Monthly Growth</div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

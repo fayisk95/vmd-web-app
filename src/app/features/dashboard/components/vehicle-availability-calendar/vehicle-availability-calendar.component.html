@@ -1,0 +1,174 @@
+<div class="calendar-container">
+  <!-- Filters Section -->
+  <mat-card class="filters-card">
+    <mat-card-header>
+      <mat-card-title>Filters</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="filterForm" class="filters-form">
+        <div class="filter-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Category</mat-label>
+            <mat-select formControlName="category">
+              <mat-option value="">All Categories</mat-option>
+              <mat-option *ngFor="let category of vehicleCategories" [value]="category">
+                {{ category }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status">
+              <mat-option value="">All Statuses</mat-option>
+              <mat-option *ngFor="let status of vehicleStatuses" [value]="status">
+                {{ status }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Min Seats</mat-label>
+            <input matInput type="number" formControlName="minSeats" min="1">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Max Seats</mat-label>
+            <input matInput type="number" formControlName="maxSeats" min="1">
+          </mat-form-field>
+
+          <button mat-stroked-button type="button" (click)="clearFilters()" class="clear-filters-btn">
+            <mat-icon>clear</mat-icon>
+            Clear
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Calendar Section -->
+  <div class="calendar-section">
+    <mat-card class="calendar-card">
+      <mat-card-header class="calendar-header">
+        <button mat-icon-button (click)="previousMonth()">
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+        <mat-card-title class="month-title">
+          {{ currentMonth | date:'MMMM yyyy' }}
+        </mat-card-title>
+        <button mat-icon-button (click)="nextMonth()">
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div *ngIf="loading" class="loading-container">
+          <app-loading-spinner></app-loading-spinner>
+        </div>
+
+        <div *ngIf="!loading" class="calendar-grid">
+          <!-- Day headers -->
+          <div class="day-header">Sun</div>
+          <div class="day-header">Mon</div>
+          <div class="day-header">Tue</div>
+          <div class="day-header">Wed</div>
+          <div class="day-header">Thu</div>
+          <div class="day-header">Fri</div>
+          <div class="day-header">Sat</div>
+
+          <!-- Calendar days -->
+          <div 
+            *ngFor="let week of getCalendarWeeks()"
+            class="calendar-week">
+            <div 
+              *ngFor="let day of week"
+              class="calendar-day"
+              [class]="getDayStatusClass(day)"
+              [class.today]="isToday(day.date)"
+              [class.other-month]="!isCurrentMonth(day.date)"
+              [class.selected]="selectedDate && day.date.toDateString() === selectedDate.toDateString()"
+              (click)="onDayClick(day)">
+              
+              <div class="day-number">{{ day.date.getDate() }}</div>
+              
+              <div class="day-stats" *ngIf="day.vehicles.length > 0">
+                <div class="stat-item available">
+                  <span class="count">{{ day.availableCount }}</span>
+                </div>
+                <div class="stat-item in-use">
+                  <span class="count">{{ day.inUseCount }}</span>
+                </div>
+                <div class="stat-item maintenance" *ngIf="day.maintenanceCount > 0">
+                  <span class="count">{{ day.maintenanceCount }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="calendar-legend">
+          <div class="legend-item">
+            <div class="legend-color available"></div>
+            <span>Available</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color in-use"></div>
+            <span>In Use</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color maintenance"></div>
+            <span>Maintenance</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Day Details Panel -->
+    <mat-card class="day-details-card" *ngIf="selectedDayData">
+      <mat-card-header>
+        <mat-card-title>
+          {{ selectedDayData.date | date:'EEEE, MMMM d, yyyy' }}
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="day-summary">
+          <div class="summary-stat">
+            <span class="label">Total Vehicles:</span>
+            <span class="value">{{ selectedDayData.vehicles.length }}</span>
+          </div>
+          <div class="summary-stat">
+            <span class="label">Available:</span>
+            <span class="value available">{{ selectedDayData.availableCount }}</span>
+          </div>
+          <div class="summary-stat">
+            <span class="label">In Use:</span>
+            <span class="value in-use">{{ selectedDayData.inUseCount }}</span>
+          </div>
+          <div class="summary-stat" *ngIf="selectedDayData.maintenanceCount > 0">
+            <span class="label">Maintenance:</span>
+            <span class="value maintenance">{{ selectedDayData.maintenanceCount }}</span>
+          </div>
+        </div>
+
+        <div class="vehicles-list">
+          <h4>Vehicle Details</h4>
+          <div class="vehicle-item" *ngFor="let vehicle of getFilteredVehicles(selectedDayData.vehicles)">
+            <div class="vehicle-info">
+              <div class="vehicle-id">{{ vehicle.vehicleId }}</div>
+              <div class="vehicle-details">
+                {{ vehicle.registrationNo }} • {{ vehicle.category }} • {{ vehicle.seatCount }} seats
+              </div>
+            </div>
+            <mat-chip 
+              class="status-chip" 
+              [style.background-color]="getStatusColor(vehicle.status)"
+              [style.color]="'white'">
+              {{ vehicle.status }}
+            </mat-chip>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
