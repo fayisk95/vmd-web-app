@@ -1,0 +1,107 @@
+<div class="business-info-settings-container">
+  <div class="section-header">
+    <h2>Business Information</h2>
+    <p>Update your company details for invoices and official documents</p>
+  </div>
+
+  <form [formGroup]="businessForm" (ngSubmit)="onSubmit()" class="business-form">
+    <div class="form-section">
+      <h3>Company Details</h3>
+      
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Company Name</mat-label>
+          <input matInput formControlName="companyName" placeholder="Your Company Name">
+          <mat-icon matSuffix>business</mat-icon>
+          <mat-error>{{ getFieldError('companyName') }}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Business Address</mat-label>
+          <textarea matInput formControlName="address" rows="3" 
+                    placeholder="Street address, city, state, postal code"></textarea>
+          <mat-icon matSuffix>location_on</mat-icon>
+          <mat-hint>Full business address for invoices and legal documents</mat-hint>
+          <mat-error>{{ getFieldError('address') }}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>Contact Information</h3>
+      
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>Phone Number</mat-label>
+          <input matInput formControlName="phone" placeholder="+1 (555) 123-4567">
+          <mat-icon matSuffix>phone</mat-icon>
+          <mat-hint>Include country code for international numbers</mat-hint>
+          <mat-error>{{ getFieldError('phone') }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>Email Address</mat-label>
+          <input matInput type="email" formControlName="email" placeholder="info@company.com">
+          <mat-icon matSuffix>email</mat-icon>
+          <mat-error>{{ getFieldError('email') }}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>Website</mat-label>
+          <input matInput formControlName="website" placeholder="https://www.company.com">
+          <mat-icon matSuffix>language</mat-icon>
+          <mat-hint>Optional - include https://</mat-hint>
+          <mat-error>{{ getFieldError('website') }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>Tax ID / EIN</mat-label>
+          <input matInput formControlName="taxId" placeholder="12-3456789">
+          <mat-icon matSuffix>receipt_long</mat-icon>
+          <mat-hint>Optional - for tax reporting purposes</mat-hint>
+          <mat-error>{{ getFieldError('taxId') }}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Preview Section -->
+    <div class="preview-section" *ngIf="businessForm.valid">
+      <h3>Invoice Header Preview</h3>
+      <div class="invoice-preview">
+        <div class="company-header">
+          <h4>{{ businessForm.get('companyName')?.value }}</h4>
+          <div class="company-details">
+            <p>{{ businessForm.get('address')?.value }}</p>
+            <p>
+              Phone: {{ businessForm.get('phone')?.value }} | 
+              Email: {{ businessForm.get('email')?.value }}
+            </p>
+            <p *ngIf="businessForm.get('website')?.value">
+              Website: {{ businessForm.get('website')?.value }}
+            </p>
+            <p *ngIf="businessForm.get('taxId')?.value">
+              Tax ID: {{ businessForm.get('taxId')?.value }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="form-actions">
+      <button mat-button type="button" (click)="onReset()" [disabled]="loading">
+        Reset
+      </button>
+      <button mat-raised-button color="primary" type="submit" 
+              [disabled]="loading || businessForm.invalid || !businessForm.dirty">
+        <mat-icon *ngIf="loading" class="spinning">refresh</mat-icon>
+        <span *ngIf="!loading">Save Changes</span>
+        <span *ngIf="loading">Saving...</span>
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,158 @@
+@import '../../../../../styles/mixins';
+
+.general-settings-container {
+  max-width: 800px;
+}
+
+.section-header {
+  margin-bottom: 32px;
+  
+  h2 {
+    @include typography-title;
+    margin: 0 0 8px 0;
+    color: #333;
+  }
+  
+  p {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+  }
+}
+
+.general-form {
+  .form-section {
+    margin-bottom: 32px;
+    
+    h3 {
+      margin: 0 0 24px 0;
+      font-size: 18px;
+      font-weight: 500;
+      color: #333;
+    }
+    
+    .form-row {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+      
+      .full-width {
+        flex: 1;
+      }
+      
+      .half-width {
+        flex: 0.5;
+      }
+    }
+  }
+  
+  .currency-preview,
+  .tax-preview {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 16px;
+    
+    .preview-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      
+      .label {
+        font-size: 14px;
+        color: #666;
+      }
+      
+      .value {
+        font-size: 16px;
+        font-weight: 500;
+        color: #333;
+      }
+    }
+    
+    .preview-calculation {
+      .calc-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        
+        &.total {
+          font-weight: 600;
+          border-top: 1px solid #ddd;
+          padding-top: 8px;
+          margin-top: 8px;
+          color: #333;
+        }
+        
+        .label {
+          color: #666;
+        }
+        
+        .value {
+          color: #333;
+        }
+      }
+    }
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #eee;
+    
+    button {
+      min-width: 120px;
+      
+      .spinning {
+        animation: spin 1s linear infinite;
+        margin-right: 8px;
+      }
+    }
+  }
+}
+
+.currency-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  
+  .currency-symbol {
+    font-weight: 600;
+    color: var(--mat-primary-color);
+    min-width: 20px;
+  }
+  
+  .currency-name {
+    flex: 1;
+  }
+  
+  .currency-code {
+    color: #666;
+    font-size: 12px;
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@include mobile {
+  .general-form {
+    .form-section .form-row {
+      flex-direction: column;
+      gap: 0;
+    }
+    
+    .form-actions {
+      flex-direction: column-reverse;
+      
+      button {
+        width: 100%;
+      }
+    }
+  }
+}

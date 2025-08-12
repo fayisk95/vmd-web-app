@@ -1,0 +1,121 @@
+<div class="categories-settings-container">
+  <div class="section-header">
+    <div class="header-content">
+      <h2>Vehicle Categories</h2>
+      <p>Manage vehicle categories and their pricing multipliers</p>
+    </div>
+    <button mat-raised-button color="primary" (click)="onAddCategory()" [disabled]="loading">
+      <mat-icon>add</mat-icon>
+      Add Category
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading-container">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+
+  <div *ngIf="!loading" class="categories-content">
+    <!-- Active Categories -->
+    <mat-card class="categories-card" *ngIf="getActiveCategories().length > 0">
+      <mat-card-header>
+        <mat-card-title>Active Categories ({{ getActiveCategories().length }})</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="categories-grid">
+          <div class="category-item" *ngFor="let category of getActiveCategories()">
+            <div class="category-content">
+              <div class="category-header">
+                <h4>{{ category.name }}</h4>
+                <div class="category-actions">
+                  <button mat-icon-button color="primary" (click)="onEditCategory(category)" matTooltip="Edit Category">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button color="accent" (click)="onToggleActive(category)" matTooltip="Deactivate">
+                    <mat-icon>visibility_off</mat-icon>
+                  </button>
+                  <button mat-icon-button color="warn" (click)="onDeleteCategory(category)" matTooltip="Delete Category">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </div>
+              
+              <p class="category-description">{{ category.description }}</p>
+              
+              <div class="category-details">
+                <div class="detail-item">
+                  <span class="label">Base Rate:</span>
+                  <span class="value">${{ category.baseRate.toFixed(2) }}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Multiplier:</span>
+                  <span class="value">{{ category.multiplier }}x</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Effective Rate:</span>
+                  <span class="value effective-rate">${{ (category.baseRate * category.multiplier).toFixed(2) }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Inactive Categories -->
+    <mat-card class="categories-card inactive-card" *ngIf="getInactiveCategories().length > 0">
+      <mat-card-header>
+        <mat-card-title>Inactive Categories ({{ getInactiveCategories().length }})</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="categories-grid">
+          <div class="category-item inactive" *ngFor="let category of getInactiveCategories()">
+            <div class="category-content">
+              <div class="category-header">
+                <h4>{{ category.name }}</h4>
+                <div class="category-actions">
+                  <button mat-icon-button color="primary" (click)="onEditCategory(category)" matTooltip="Edit Category">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button color="accent" (click)="onToggleActive(category)" matTooltip="Activate">
+                    <mat-icon>visibility</mat-icon>
+                  </button>
+                  <button mat-icon-button color="warn" (click)="onDeleteCategory(category)" matTooltip="Delete Category">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </div>
+              
+              <p class="category-description">{{ category.description }}</p>
+              
+              <div class="category-details">
+                <div class="detail-item">
+                  <span class="label">Base Rate:</span>
+                  <span class="value">${{ category.baseRate.toFixed(2) }}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Multiplier:</span>
+                  <span class="value">{{ category.multiplier }}x</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Empty State -->
+    <mat-card class="empty-state-card" *ngIf="categories.length === 0">
+      <mat-card-content>
+        <div class="empty-state">
+          <mat-icon class="empty-icon">category</mat-icon>
+          <h3>No Categories Configured</h3>
+          <p>Start by adding your first vehicle category to organize your fleet pricing.</p>
+          <button mat-raised-button color="primary" (click)="onAddCategory()">
+            <mat-icon>add</mat-icon>
+            Add First Category
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

@@ -1,0 +1,193 @@
+@import '../../../../../styles/mixins';
+
+.seat-types-settings-container {
+  .section-header {
+    @include flex-between;
+    margin-bottom: 24px;
+    
+    .header-content {
+      h2 {
+        @include typography-title;
+        margin: 0 0 8px 0;
+        color: #333;
+      }
+      
+      p {
+        margin: 0;
+        color: #666;
+        font-size: 14px;
+      }
+    }
+    
+    button {
+      height: 40px;
+      
+      mat-icon {
+        margin-right: 8px;
+      }
+    }
+  }
+  
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+  }
+}
+
+.seat-types-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.seat-types-card {
+  @include card-elevation(2);
+  
+  &.inactive-card {
+    opacity: 0.8;
+    
+    .seat-types-grid .seat-type-item.inactive {
+      opacity: 0.7;
+    }
+  }
+  
+  .seat-types-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    
+    .seat-type-item {
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 16px;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        border-color: var(--mat-primary-color);
+        @include card-elevation(1);
+      }
+      
+      .seat-type-content {
+        .seat-type-header {
+          @include flex-between;
+          margin-bottom: 12px;
+          
+          h4 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 500;
+            color: #333;
+          }
+          
+          .seat-type-actions {
+            display: flex;
+            gap: 4px;
+            
+            button {
+              width: 32px;
+              height: 32px;
+              
+              mat-icon {
+                font-size: 16px;
+              }
+            }
+          }
+        }
+        
+        .seat-type-description {
+          margin: 0 0 16px 0;
+          color: #666;
+          font-size: 14px;
+          line-height: 1.4;
+        }
+        
+        .seat-type-details {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          
+          .detail-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            
+            .label {
+              font-size: 12px;
+              color: #666;
+              font-weight: 500;
+            }
+            
+            .value {
+              font-size: 14px;
+              font-weight: 500;
+              color: #333;
+              
+              &.multiplier {
+                color: var(--mat-primary-color);
+                font-weight: 600;
+              }
+              
+              &.example-price {
+                color: #2e7d32;
+                font-weight: 600;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.empty-state-card {
+  @include card-elevation(1);
+  
+  .empty-state {
+    text-align: center;
+    padding: 40px;
+    
+    .empty-icon {
+      font-size: 64px;
+      width: 64px;
+      height: 64px;
+      color: #ccc;
+      margin-bottom: 16px;
+    }
+    
+    h3 {
+      margin: 0 0 8px 0;
+      color: #666;
+    }
+    
+    p {
+      margin: 0 0 24px 0;
+      color: #999;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    button {
+      mat-icon {
+        margin-right: 8px;
+      }
+    }
+  }
+}
+
+@include mobile {
+  .seat-types-settings-container .section-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    
+    button {
+      width: 100%;
+    }
+  }
+  
+  .seat-types-card .seat-types-grid {
+    grid-template-columns: 1fr;
+  }
+}

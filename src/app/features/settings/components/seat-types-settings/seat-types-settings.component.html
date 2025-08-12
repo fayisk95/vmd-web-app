@@ -1,0 +1,113 @@
+<div class="seat-types-settings-container">
+  <div class="section-header">
+    <div class="header-content">
+      <h2>Seat Types</h2>
+      <p>Configure different seat types and their pricing multipliers</p>
+    </div>
+    <button mat-raised-button color="primary" (click)="onAddSeatType()" [disabled]="loading">
+      <mat-icon>add</mat-icon>
+      Add Seat Type
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading-container">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+
+  <div *ngIf="!loading" class="seat-types-content">
+    <!-- Active Seat Types -->
+    <mat-card class="seat-types-card" *ngIf="getActiveSeatTypes().length > 0">
+      <mat-card-header>
+        <mat-card-title>Active Seat Types ({{ getActiveSeatTypes().length }})</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="seat-types-grid">
+          <div class="seat-type-item" *ngFor="let seatType of getActiveSeatTypes()">
+            <div class="seat-type-content">
+              <div class="seat-type-header">
+                <h4>{{ seatType.name }}</h4>
+                <div class="seat-type-actions">
+                  <button mat-icon-button color="primary" (click)="onEditSeatType(seatType)" matTooltip="Edit Seat Type">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button color="accent" (click)="onToggleActive(seatType)" matTooltip="Deactivate">
+                    <mat-icon>visibility_off</mat-icon>
+                  </button>
+                  <button mat-icon-button color="warn" (click)="onDeleteSeatType(seatType)" matTooltip="Delete Seat Type">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </div>
+              
+              <p class="seat-type-description">{{ seatType.description }}</p>
+              
+              <div class="seat-type-details">
+                <div class="detail-item">
+                  <span class="label">Price Multiplier:</span>
+                  <span class="value multiplier">{{ seatType.priceMultiplier }}x</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Example (Base $100):</span>
+                  <span class="value example-price">${{ (100 * seatType.priceMultiplier).toFixed(2) }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Inactive Seat Types -->
+    <mat-card class="seat-types-card inactive-card" *ngIf="getInactiveSeatTypes().length > 0">
+      <mat-card-header>
+        <mat-card-title>Inactive Seat Types ({{ getInactiveSeatTypes().length }})</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="seat-types-grid">
+          <div class="seat-type-item inactive" *ngFor="let seatType of getInactiveSeatTypes()">
+            <div class="seat-type-content">
+              <div class="seat-type-header">
+                <h4>{{ seatType.name }}</h4>
+                <div class="seat-type-actions">
+                  <button mat-icon-button color="primary" (click)="onEditSeatType(seatType)" matTooltip="Edit Seat Type">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button color="accent" (click)="onToggleActive(seatType)" matTooltip="Activate">
+                    <mat-icon>visibility</mat-icon>
+                  </button>
+                  <button mat-icon-button color="warn" (click)="onDeleteSeatType(seatType)" matTooltip="Delete Seat Type">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </div>
+              
+              <p class="seat-type-description">{{ seatType.description }}</p>
+              
+              <div class="seat-type-details">
+                <div class="detail-item">
+                  <span class="label">Price Multiplier:</span>
+                  <span class="value">{{ seatType.priceMultiplier }}x</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Empty State -->
+    <mat-card class="empty-state-card" *ngIf="seatTypes.length === 0">
+      <mat-card-content>
+        <div class="empty-state">
+          <mat-icon class="empty-icon">airline_seat_recline_normal</mat-icon>
+          <h3>No Seat Types Configured</h3>
+          <p>Add different seat types to offer various pricing options for your vehicles.</p>
+          <button mat-raised-button color="primary" (click)="onAddSeatType()">
+            <mat-icon>add</mat-icon>
+            Add First Seat Type
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

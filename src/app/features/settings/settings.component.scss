@@ -1,0 +1,72 @@
+@import '../../../styles/mixins';
+
+.settings-container {
+  @include container-padding;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.settings-header {
+  margin-bottom: 32px;
+  text-align: center;
+  
+  h1 {
+    @include typography-headline;
+    margin: 0 0 8px 0;
+  }
+  
+  p {
+    color: #666;
+    font-size: 16px;
+    margin: 0;
+  }
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  padding: 60px;
+}
+
+.settings-content {
+  .settings-card {
+    @include card-elevation(2);
+    
+    ::ng-deep .mat-tab-group {
+      .mat-tab-header {
+        border-bottom: 1px solid #e0e0e0;
+        
+        .mat-tab-label {
+          min-width: 120px;
+          font-weight: 500;
+        }
+      }
+      
+      .mat-tab-body-wrapper {
+        .tab-content {
+          padding: 32px;
+          min-height: 500px;
+        }
+      }
+    }
+  }
+}
+
+@include mobile {
+  .settings-header {
+    margin-bottom: 24px;
+    
+    h1 {
+      font-size: 24px;
+    }
+    
+    p {
+      font-size: 14px;
+    }
+  }
+  
+  .settings-content .settings-card ::ng-deep .mat-tab-group .mat-tab-body-wrapper .tab-content {
+    padding: 16px;
+    min-height: 400px;
+  }
+}

@@ -1,0 +1,62 @@
+.category-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 400px;
+  
+  .full-width {
+    width: 100%;
+  }
+  
+  .form-row {
+    display: flex;
+    gap: 16px;
+    
+    .half-width {
+      flex: 1;
+    }
+  }
+  
+  .rate-preview {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 8px 0;
+    
+    .preview-calculation {
+      .calc-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        
+        &.total {
+          font-weight: 600;
+          border-top: 1px solid #ddd;
+          padding-top: 8px;
+          margin-top: 8px;
+          color: #2e7d32;
+        }
+        
+        .label {
+          color: #666;
+          font-size: 14px;
+        }
+        
+        .value {
+          color: #333;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  
+  button mat-icon {
+    margin-right: 8px;
+  }
+}

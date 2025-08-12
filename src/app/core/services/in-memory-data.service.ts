@@ -4,6 +4,7 @@ import { Vehicle, VehicleType, VehicleCategory, VehicleStatus } from '../models/
 import { Client } from '../models/client.model';
 import { Trip, TripStatus } from '../models/trip.model';
 import { Invoice, PaymentStatus } from '../models/invoice.model';
+import { AppSettings, SeatType, BusinessInfo, Currency } from '../models/settings.model';
 
 @Injectable({
   providedIn: 'root'
@@ -217,7 +218,7 @@ export class InMemoryDataService implements InMemoryDbService {
         updatedAt: new Date('2024-02-18T10:45:00')
       }
     ];
-    
+
     const invoices: Invoice[] = [
       {
         id: 1,
@@ -293,7 +294,92 @@ export class InMemoryDataService implements InMemoryDbService {
         updatedAt: new Date('2024-02-19T10:45:00')
       }
     ];
-    
+
+    const settings: AppSettings = {
+      id: 1,
+      currency: {
+        code: 'USD',
+        symbol: '$',
+        name: 'US Dollar',
+        decimalPlaces: 2
+      },
+      defaultTaxRate: 10,
+      categories: [
+        {
+          id: 'CAT-001',
+          name: 'Economy',
+          description: 'Basic transportation with standard amenities',
+          baseRate: 50,
+          multiplier: 1.0,
+          isActive: true
+        },
+        {
+          id: 'CAT-002',
+          name: 'Standard',
+          description: 'Comfortable transportation with enhanced features',
+          baseRate: 50,
+          multiplier: 1.5,
+          isActive: true
+        },
+        {
+          id: 'CAT-003',
+          name: 'Premium',
+          description: 'High-end transportation with luxury amenities',
+          baseRate: 50,
+          multiplier: 2.0,
+          isActive: true
+        },
+        {
+          id: 'CAT-004',
+          name: 'Luxury',
+          description: 'Top-tier transportation with exclusive services',
+          baseRate: 50,
+          multiplier: 3.0,
+          isActive: true
+        }
+      ],
+      seatTypes: [
+        {
+          id: 'SEAT-001',
+          name: 'Standard Seat',
+          description: 'Regular passenger seat with basic comfort',
+          priceMultiplier: 1.0,
+          isActive: true
+        },
+        {
+          id: 'SEAT-002',
+          name: 'Premium Seat',
+          description: 'Enhanced comfort seat with extra legroom',
+          priceMultiplier: 1.3,
+          isActive: true
+        },
+        {
+          id: 'SEAT-003',
+          name: 'Business Seat',
+          description: 'Business class seat with premium amenities',
+          priceMultiplier: 1.8,
+          isActive: true
+        },
+        {
+          id: 'SEAT-004',
+          name: 'VIP Seat',
+          description: 'Exclusive VIP seating with luxury features',
+          priceMultiplier: 2.5,
+          isActive: false
+        }
+      ],
+      businessInfo: {
+        companyName: 'VMD Transportation Services',
+        address: '123 Business Avenue, Suite 100, City, State 12345',
+        phone: '+1 (555) 123-4567',
+        email: 'info@vmdtransport.com',
+        website: 'https://www.vmdtransport.com',
+        taxId: 'TAX-123456789'
+      },
+      createdAt: new Date('2024-01-01'),
+      updatedAt: new Date('2024-01-15')
+    };
+
     const dashboard = {
       totalUsers: users.length,
       totalProducts: products.length,
@@ -301,7 +387,7 @@ export class InMemoryDataService implements InMemoryDbService {
       monthlyGrowth: 12.5
     };
 
-    return { users, products, vehicles, clients, trips, invoices, dashboard };
+    return { users, products, vehicles, clients, trips, invoices, dashboard, settings };
   }
 
   genId(collection: any[]): number {

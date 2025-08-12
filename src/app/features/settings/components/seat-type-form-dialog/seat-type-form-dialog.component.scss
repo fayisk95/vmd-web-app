@@ -1,0 +1,63 @@
+.seat-type-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 400px;
+  
+  .full-width {
+    width: 100%;
+  }
+  
+  .form-row {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+  
+  .price-preview {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 8px 0;
+    
+    .preview-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: #333;
+      margin-bottom: 12px;
+    }
+    
+    .preview-examples {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      
+      .example-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+        .base {
+          color: #666;
+          font-size: 14px;
+        }
+        
+        .result {
+          color: #2e7d32;
+          font-weight: 600;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  
+  button mat-icon {
+    margin-right: 8px;
+  }
+}

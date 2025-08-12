@@ -45,6 +45,11 @@
           <mat-icon>people</mat-icon>
           <span>Users</span>
         </a>
+        <a mat-list-item routerLink="/settings" routerLinkActive="active"
+           *ngIf="(currentUser$ | async)?.role === 'Admin'">
+          <mat-icon>settings</mat-icon>
+          <span>Settings</span>
+        </a>
       </mat-nav-list>
     </mat-sidenav>
     

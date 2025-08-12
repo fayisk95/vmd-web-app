@@ -1,0 +1,52 @@
+<div class="settings-container">
+  <div class="settings-header">
+    <h1>Application Settings</h1>
+    <p>Configure your application preferences and business settings</p>
+  </div>
+
+  <div *ngIf="loading" class="loading-container">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+
+  <div *ngIf="!loading && settings" class="settings-content">
+    <mat-card class="settings-card">
+      <mat-tab-group [(selectedIndex)]="selectedTab" (selectedTabChange)="onTabChange($event.index)">
+        <mat-tab label="General">
+          <div class="tab-content">
+            <app-general-settings 
+              [settings]="settings"
+              (settingsUpdated)="onSettingsUpdated()">
+            </app-general-settings>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Categories">
+          <div class="tab-content">
+            <app-categories-settings 
+              [categories]="settings.categories"
+              (settingsUpdated)="onSettingsUpdated()">
+            </app-categories-settings>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Seat Types">
+          <div class="tab-content">
+            <app-seat-types-settings 
+              [seatTypes]="settings.seatTypes"
+              (settingsUpdated)="onSettingsUpdated()">
+            </app-seat-types-settings>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Business Info">
+          <div class="tab-content">
+            <app-business-info-settings 
+              [businessInfo]="settings.businessInfo"
+              (settingsUpdated)="onSettingsUpdated()">
+            </app-business-info-settings>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card>
+  </div>
+</div>
