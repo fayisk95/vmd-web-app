@@ -35,6 +35,11 @@
           <mat-icon>receipt</mat-icon>
           <span>Invoices</span>
         </a>
+        <a mat-list-item routerLink="/reports" routerLinkActive="active"
+           *ngIf="(currentUser$ | async)?.role === 'Admin' || (currentUser$ | async)?.role === 'Manager'">
+          <mat-icon>analytics</mat-icon>
+          <span>Reports</span>
+        </a>
         <a mat-list-item routerLink="/users" routerLinkActive="active"
            *ngIf="(currentUser$ | async)?.role === 'Admin'">
           <mat-icon>people</mat-icon>

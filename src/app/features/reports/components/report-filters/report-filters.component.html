@@ -1,0 +1,71 @@
+<mat-card class="filters-card">
+  <mat-card-header>
+    <mat-card-title>Report Filters</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="filterForm" class="filters-form">
+      <div class="filter-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Start Date</mat-label>
+          <input matInput [matDatepicker]="startPicker" formControlName="startDate">
+          <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+          <mat-datepicker #startPicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>End Date</mat-label>
+          <input matInput [matDatepicker]="endPicker" formControlName="endDate">
+          <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+          <mat-datepicker #endPicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Vehicle</mat-label>
+          <mat-select formControlName="vehicleId">
+            <mat-option value="">All Vehicles</mat-option>
+            <mat-option *ngFor="let vehicle of vehicles" [value]="vehicle.id">
+              {{ vehicle.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Client</mat-label>
+          <mat-select formControlName="clientId">
+            <mat-option value="">All Clients</mat-option>
+            <mat-option *ngFor="let client of clients" [value]="client.id">
+              {{ client.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="filter-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Vehicle Type</mat-label>
+          <mat-select formControlName="vehicleType">
+            <mat-option value="">All Types</mat-option>
+            <mat-option *ngFor="let type of vehicleTypes" [value]="type">
+              {{ type }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Vehicle Category</mat-label>
+          <mat-select formControlName="vehicleCategory">
+            <mat-option value="">All Categories</mat-option>
+            <mat-option *ngFor="let category of vehicleCategories" [value]="category">
+              {{ category }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-stroked-button type="button" (click)="clearFilters()" class="clear-filters-btn">
+          <mat-icon>clear</mat-icon>
+          Clear Filters
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

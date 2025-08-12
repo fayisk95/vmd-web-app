@@ -54,7 +54,7 @@ export class DashboardChartsComponent implements OnInit, OnDestroy {
   }
 
   private createUtilizationChart(data: any): void {
-    const ctx = this.utilizationChartRef.nativeElement.getContext('2d');
+    const ctx = this.utilizationChartRef?.nativeElement.getContext('2d');
     if (!ctx) return;
 
     const config: ChartConfiguration = {
@@ -96,7 +96,7 @@ export class DashboardChartsComponent implements OnInit, OnDestroy {
   }
 
   private createRevenueChart(data: any): void {
-    const ctx = this.revenueChartRef.nativeElement.getContext('2d');
+    const ctx = this.revenueChartRef?.nativeElement.getContext('2d');
     if (!ctx) return;
 
     const config: ChartConfiguration = {

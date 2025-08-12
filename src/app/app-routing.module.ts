@@ -56,6 +56,12 @@ const routes: Routes = [
     data: { roles: [UserRole.ADMIN, UserRole.MANAGER] }
   },
   {
+    path: 'reports',
+    loadChildren: () => import('./features/reports/reports.module').then(m => m.ReportsModule),
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: [UserRole.ADMIN, UserRole.MANAGER] }
+  },
+  {
     path: '**',
     redirectTo: '/auth/login'
   }

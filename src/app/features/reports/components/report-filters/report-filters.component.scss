@@ -1,0 +1,49 @@
+@import '../../../../../styles/mixins';
+
+.filters-card {
+  @include card-elevation(1);
+  margin-bottom: 24px;
+  
+  .filters-form {
+    .filter-row {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+      
+      mat-form-field {
+        flex: 1;
+        min-width: 200px;
+      }
+      
+      .clear-filters-btn {
+        height: 40px;
+        white-space: nowrap;
+        
+        mat-icon {
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+}
+
+@include mobile {
+  .filters-card .filters-form .filter-row {
+    flex-direction: column;
+    align-items: stretch;
+    
+    mat-form-field {
+      min-width: auto;
+    }
+    
+    .clear-filters-btn {
+      width: 100%;
+    }
+  }
+}

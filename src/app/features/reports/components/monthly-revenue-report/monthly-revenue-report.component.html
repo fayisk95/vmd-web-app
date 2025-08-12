@@ -1,0 +1,124 @@
+<div class="revenue-report-container">
+  <div *ngIf="loading" class="loading-container">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+
+  <div *ngIf="!loading" class="report-content">
+    <!-- Summary Cards -->
+    <div class="summary-cards">
+      <mat-card class="summary-card">
+        <mat-card-content>
+          <div class="summary-content">
+            <div class="summary-icon">
+              <mat-icon>attach_money</mat-icon>
+            </div>
+            <div class="summary-info">
+              <div class="summary-value">{{ totalRevenue | currencyFormat }}</div>
+              <div class="summary-label">Total Revenue</div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="summary-card">
+        <mat-card-content>
+          <div class="summary-content">
+            <div class="summary-icon">
+              <mat-icon>local_shipping</mat-icon>
+            </div>
+            <div class="summary-info">
+              <div class="summary-value">{{ totalTrips }}</div>
+              <div class="summary-label">Total Trips</div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="summary-card">
+        <mat-card-content>
+          <div class="summary-content">
+            <div class="summary-icon">
+              <mat-icon>trending_up</mat-icon>
+            </div>
+            <div class="summary-info">
+              <div class="summary-value">{{ avgMonthlyRevenue | currencyFormat }}</div>
+              <div class="summary-label">Avg Monthly Revenue</div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="summary-card">
+        <mat-card-content>
+          <div class="summary-content">
+            <div class="summary-icon">
+              <mat-icon>receipt</mat-icon>
+            </div>
+            <div class="summary-info">
+              <div class="summary-value">{{ avgTripValue | currencyFormat }}</div>
+              <div class="summary-label">Avg Trip Value</div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-section">
+      <mat-card class="chart-card">
+        <mat-card-header>
+          <mat-card-title>Monthly Revenue Trend</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="chart-wrapper">
+            <canvas #revenueChart></canvas>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="chart-card">
+        <mat-card-header>
+          <mat-card-title>Monthly Trip Count</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="chart-wrapper">
+            <canvas #tripsChart></canvas>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Data Table -->
+    <mat-card class="table-card">
+      <mat-card-header>
+        <mat-card-title>Monthly Breakdown</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <table mat-table [dataSource]="revenueData" class="revenue-table">
+          <ng-container matColumnDef="month">
+            <th mat-header-cell *matHeaderCellDef>Month</th>
+            <td mat-cell *matCellDef="let element">{{ element.month }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="revenue">
+            <th mat-header-cell *matHeaderCellDef>Revenue</th>
+            <td mat-cell *matCellDef="let element">{{ element.revenue | currencyFormat }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="trips">
+            <th mat-header-cell *matHeaderCellDef>Trips</th>
+            <td mat-cell *matCellDef="let element">{{ element.trips }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="avgTripValue">
+            <th mat-header-cell *matHeaderCellDef>Avg Trip Value</th>
+            <td mat-cell *matCellDef="let element">{{ element.avgTripValue | currencyFormat }}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="['month', 'revenue', 'trips', 'avgTripValue']"></tr>
+          <tr mat-row *matRowDef="let row; columns: ['month', 'revenue', 'trips', 'avgTripValue'];"></tr>
+        </table>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

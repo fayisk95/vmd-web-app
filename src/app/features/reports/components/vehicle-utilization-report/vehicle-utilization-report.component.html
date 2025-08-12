@@ -1,0 +1,153 @@
+<div class="utilization-report-container">
+  <div *ngIf="loading" class="loading-container">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+
+  <div *ngIf="!loading" class="report-content">
+    <!-- Summary Cards -->
+    <div class="summary-cards">
+      <mat-card class="summary-card">
+        <mat-card-content>
+          <div class="summary-content">
+            <div class="summary-icon">
+              <mat-icon>speed</mat-icon>
+            </div>
+            <div class="summary-info">
+              <div class="summary-value">{{ avgUtilizationRate }}%</div>
+              <div class="summary-label">Avg Utilization Rate</div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="summary-card">
+        <mat-card-content>
+          <div class="summary-content">
+            <div class="summary-icon">
+              <mat-icon>directions_bus</mat-icon>
+            </div>
+            <div class="summary-info">
+              <div class="summary-value">{{ activeVehicles }}</div>
+              <div class="summary-label">Active Vehicles</div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="summary-card">
+        <mat-card-content>
+          <div class="summary-content">
+            <div class="summary-icon">
+              <mat-icon>local_shipping</mat-icon>
+            </div>
+            <div class="summary-info">
+              <div class="summary-value">{{ totalTrips }}</div>
+              <div class="summary-label">Total Trips</div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="summary-card">
+        <mat-card-content>
+          <div class="summary-content">
+            <div class="summary-icon">
+              <mat-icon>attach_money</mat-icon>
+            </div>
+            <div class="summary-info">
+              <div class="summary-value">{{ totalRevenue | currencyFormat }}</div>
+              <div class="summary-label">Total Revenue</div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-section">
+      <mat-card class="chart-card">
+        <mat-card-header>
+          <mat-card-title>Vehicle Utilization Rates</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="chart-wrapper">
+            <canvas #utilizationChart></canvas>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="chart-card">
+        <mat-card-header>
+          <mat-card-title>Revenue by Vehicle</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="chart-wrapper">
+            <canvas #revenueChart></canvas>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Data Table -->
+    <mat-card class="table-card">
+      <mat-card-header>
+        <mat-card-title>Vehicle Utilization Details</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <table mat-table [dataSource]="utilizationData" class="utilization-table">
+          <ng-container matColumnDef="vehicleId">
+            <th mat-header-cell *matHeaderCellDef>Vehicle ID</th>
+            <td mat-cell *matCellDef="let element">
+              <div class="vehicle-cell">
+                <strong>{{ element.vehicleId }}</strong>
+                <div class="vehicle-details">{{ element.registrationNo }} • {{ element.type }} • {{ element.category }}</div>
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="utilizationRate">
+            <th mat-header-cell *matHeaderCellDef>Utilization Rate</th>
+            <td mat-cell *matCellDef="let element">
+              <div class="utilization-cell">
+                <div class="rate-value" [style.color]="getUtilizationStatusColor(element.utilizationRate)">
+                  {{ element.utilizationRate }}%
+                </div>
+                <mat-chip 
+                  class="status-chip" 
+                  [style.background-color]="getUtilizationStatusColor(element.utilizationRate)"
+                  [style.color]="'white'">
+                  {{ getUtilizationStatus(element.utilizationRate) }}
+                </mat-chip>
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="activeDays">
+            <th mat-header-cell *matHeaderCellDef>Active Days</th>
+            <td mat-cell *matCellDef="let element">
+              <div class="days-cell">
+                <span class="days-value">{{ element.activeDays }}/{{ element.availableDays }}</span>
+                <div class="progress-bar">
+                  <div class="progress-fill" [style.width.%]="(element.activeDays / element.availableDays) * 100"></div>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="totalTrips">
+            <th mat-header-cell *matHeaderCellDef>Total Trips</th>
+            <td mat-cell *matCellDef="let element">{{ element.totalTrips }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="totalRevenue">
+            <th mat-header-cell *matHeaderCellDef>Revenue</th>
+            <td mat-cell *matCellDef="let element">{{ element.totalRevenue | currencyFormat }}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="['vehicleId', 'utilizationRate', 'activeDays', 'totalTrips', 'totalRevenue']"></tr>
+          <tr mat-row *matRowDef="let row; columns: ['vehicleId', 'utilizationRate', 'activeDays', 'totalTrips', 'totalRevenue'];"></tr>
+        </table>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

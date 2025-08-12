@@ -24,6 +24,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 // CDK Modules
 import { LayoutModule } from '@angular/cdk/layout';
 
@@ -61,6 +63,8 @@ const MATERIAL_MODULES = [
   MatCheckboxModule,
   MatMenuModule,
   MatDividerModule,
+  MatTabsModule,
+  MatButtonToggleModule,
   LayoutModule
 ];
 

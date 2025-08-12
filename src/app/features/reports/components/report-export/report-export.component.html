@@ -1,0 +1,16 @@
+<div class="export-actions">
+  <button mat-stroked-button (click)="onExport('pdf')" [disabled]="loading">
+    <mat-icon>picture_as_pdf</mat-icon>
+    Export PDF
+  </button>
+  
+  <button mat-stroked-button (click)="onExport('excel')" [disabled]="loading">
+    <mat-icon>table_chart</mat-icon>
+    Export Excel
+  </button>
+  
+  <div *ngIf="loading" class="export-loading">
+    <mat-progress-spinner diameter="20" mode="indeterminate"></mat-progress-spinner>
+    <span>Generating report...</span>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<div class="reports-container">
+  <div class="reports-header">
+    <h1>Reports & Analytics</h1>
+    <div class="header-actions">
+      <app-report-export 
+        [loading]="loading"
+        (exportReport)="onExportReport($event)">
+      </app-report-export>
+    </div>
+  </div>
+
+  <!-- Report Filters -->
+  <app-report-filters [filterForm]="filterForm"></app-report-filters>
+
+  <!-- Report Tabs -->
+  <mat-card class="reports-card">
+    <mat-tab-group [(selectedIndex)]="selectedTab" (selectedTabChange)="onTabChange($event.index)">
+      <mat-tab label="Monthly Revenue">
+        <div class="tab-content">
+          <app-monthly-revenue-report></app-monthly-revenue-report>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Trip Count Reports">
+        <div class="tab-content">
+          <app-trip-count-report></app-trip-count-report>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Vehicle Utilization">
+        <div class="tab-content">
+          <app-vehicle-utilization-report></app-vehicle-utilization-report>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+</div>
