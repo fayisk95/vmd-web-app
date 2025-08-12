@@ -6,6 +6,11 @@
   h1 {
     @include typography-headline;
     margin-bottom: 24px;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
   }
 }
 
@@ -14,41 +19,62 @@
 }
 
 .welcome-card {
-  @include card-elevation(1);
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  @include card-elevation(3);
+  background: var(--gradient-primary);
   color: white;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    transform: translate(50%, -50%);
+  }
   
   .welcome-content {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
+    z-index: 2;
     
     .welcome-text {
       h2 {
         margin: 0 0 8px 0;
-        font-size: 24px;
-        font-weight: 500;
+        font-size: 28px;
+        font-weight: 700;
+        font-family: 'Inter', sans-serif;
       }
       
       p {
         margin: 0;
         opacity: 0.9;
+        font-size: 16px;
         
         strong {
           background: rgba(255, 255, 255, 0.2);
-          padding: 2px 8px;
-          border-radius: 12px;
+          padding: 4px 12px;
+          border-radius: 16px;
           font-weight: 600;
+          backdrop-filter: blur(10px);
         }
       }
     }
     
     .user-avatar {
       img {
-        width: 60px;
-        height: 60px;
+        width: 80px;
+        height: 80px;
         border-radius: 50%;
-        border: 3px solid rgba(255, 255, 255, 0.3);
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
       }
     }
   }

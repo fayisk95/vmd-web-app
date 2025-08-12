@@ -1,4 +1,100 @@
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { 
+  margin: 0; 
+  font-family: 'Inter', 'Roboto', "Helvetica Neue", sans-serif;
+  background: #f8fafc;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Enhanced Material Design overrides */
+.mat-card {
+  border-radius: 16px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mat-card:hover {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12) !important;
+  transform: translateY(-2px);
+}
+
+.mat-raised-button {
+  border-radius: 12px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.mat-raised-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2) !important;
+}
+
+.mat-stroked-button {
+  border-radius: 12px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  border-width: 2px !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.mat-stroked-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.mat-form-field-outline {
+  border-radius: 12px !important;
+}
+
+.mat-form-field-outline-thick {
+  border-radius: 12px !important;
+}
+
+.mat-chip {
+  border-radius: 12px !important;
+  font-weight: 500 !important;
+  font-size: 12px !important;
+}
+
+.mat-table {
+  border-radius: 12px !important;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+.mat-header-cell {
+  font-weight: 600 !important;
+  color: #374151 !important;
+  background: #f8fafc !important;
+}
+
+.mat-row:hover {
+  background-color: #f8fafc !important;
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #cbd5e1 0%, #94a3b8 100%);
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%);
+}

@@ -3,19 +3,34 @@
 .charts-container {
   display: grid;
   grid-template-columns: 1fr 2fr;
-  gap: 24px;
+  gap: 28px;
   margin-bottom: 24px;
 }
 
 .chart-card {
-  @include card-elevation(2);
+  @include card-elevation(3);
+  border-radius: 20px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  overflow: hidden;
+  
+  mat-card-header {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    
+    mat-card-title {
+      font-weight: 600;
+      color: #374151;
+      font-family: 'Inter', sans-serif;
+    }
+  }
   
   .chart-wrapper {
-    height: 300px;
+    height: 320px;
     position: relative;
+    padding: 16px;
     
     canvas {
       max-height: 100%;
+      border-radius: 12px;
     }
   }
 }

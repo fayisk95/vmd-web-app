@@ -2,27 +2,57 @@
 
 .sidenav-container {
   height: 100vh;
+  background: var(--color-background-primary);
 }
 
 .sidenav {
   width: 250px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  border-right: 1px solid rgba(0, 0, 0, 0.06);
   
   .mat-toolbar {
     background: inherit;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    font-weight: 600;
+    color: #1a202c;
   }
   
   .mat-nav-list {
+    padding-top: 16px;
+    
     .mat-list-item {
+      margin: 4px 12px;
+      border-radius: 12px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      
       &.active {
-        background-color: rgba(0, 0, 0, 0.04);
+        background: linear-gradient(135deg, var(--mat-primary-color) 0%, var(--mat-primary-dark) 100%);
+        color: white;
+        box-shadow: 0 4px 12px rgba(63, 81, 181, 0.3);
         
         .mat-icon {
-          color: var(--mat-primary-color);
+          color: white;
         }
+        
+        span {
+          color: white;
+          font-weight: 500;
+        }
+      }
+      
+      &:hover:not(.active) {
+        background-color: rgba(63, 81, 181, 0.08);
+        transform: translateX(4px);
       }
       
       .mat-icon {
         margin-right: 16px;
+        transition: color 0.3s ease;
+      }
+      
+      span {
+        font-weight: 500;
+        transition: color 0.3s ease;
       }
     }
   }
@@ -33,20 +63,52 @@
 }
 
 .mat-toolbar {
+  background: var(--gradient-primary) !important;
+  color: white !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  
   .spacer {
     flex: 1 1 auto;
+  }
+  
+  button {
+    color: white !important;
+  }
+  
+  span {
+    font-weight: 600;
+    font-size: 18px;
   }
 }
 
 .main-content {
   @include container-padding;
   min-height: calc(100vh - 64px);
-  background-color: #f5f5f5;
+  background: var(--color-background-primary);
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: var(--gradient-primary);
+    opacity: 0.05;
+    z-index: 0;
+  }
+  
+  > * {
+    position: relative;
+    z-index: 1;
+  }
 }
 
 .is-mobile {
   .sidenav {
     width: 100vw;
+    background: white;
   }
   
   .main-content {

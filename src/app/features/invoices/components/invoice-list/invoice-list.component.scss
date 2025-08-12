@@ -7,12 +7,14 @@
 }
 
 .filters-card {
-  @include card-elevation(1);
+  @include card-elevation(2);
+  border-radius: 16px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
   
   .filters-form {
     .filter-row {
       display: flex;
-      gap: 16px;
+      gap: 20px;
       align-items: center;
       flex-wrap: wrap;
       
@@ -22,8 +24,10 @@
       }
       
       .clear-filters-btn {
-        height: 40px;
+        height: 44px;
         white-space: nowrap;
+        border-radius: 12px;
+        font-weight: 600;
         
         mat-icon {
           margin-right: 8px;
@@ -34,9 +38,10 @@
 }
 
 .table-container {
-  @include card-elevation(2);
-  border-radius: 8px;
+  @include card-elevation(3);
+  border-radius: 16px;
   overflow: hidden;
+  background: white;
   
   .loading-container {
     padding: 40px;
@@ -49,49 +54,61 @@
   
   .client-info {
     .client-name {
-      font-weight: 500;
+      font-weight: 600;
       margin-bottom: 2px;
+      color: #374151;
     }
     
     .client-email {
-      font-size: 12px;
-      color: #666;
+      font-size: 13px;
+      color: #6b7280;
+      font-weight: 400;
     }
   }
   
   .due-date {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
+    font-weight: 500;
     
     &.overdue {
       color: #f44336;
-      font-weight: 500;
+      font-weight: 600;
+      background: rgba(244, 67, 54, 0.1);
+      padding: 4px 8px;
+      border-radius: 8px;
     }
     
     .overdue-icon {
-      font-size: 16px;
+      font-size: 18px;
       color: #f44336;
     }
   }
   
   .amount-info {
     .total-amount {
-      font-weight: 600;
+      font-weight: 700;
       color: #2e7d32;
       margin-bottom: 2px;
+      font-size: 16px;
+      font-family: 'Inter', sans-serif;
     }
     
     .trip-count {
-      font-size: 12px;
-      color: #666;
+      font-size: 13px;
+      color: #6b7280;
+      font-weight: 500;
     }
   }
   
   .status-chip {
-    font-size: 11px;
-    font-weight: 500;
-    min-height: 24px;
+    font-size: 12px;
+    font-weight: 600;
+    min-height: 28px;
+    border-radius: 14px;
+    padding: 0 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
   
   .actions-cell {
@@ -99,24 +116,42 @@
     justify-content: center;
     
     button {
-      width: 32px;
-      height: 32px;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        transform: scale(1.1);
+      }
     }
   }
   
   .invoice-row {
+    transition: all 0.2s ease;
+    
     &:hover {
-      background-color: rgba(0, 0, 0, 0.02);
+      background-color: #f8fafc;
+      transform: scale(1.005);
     }
   }
 }
 
 ::ng-deep .mat-menu-panel {
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  
   .delete-action {
     color: #f44336;
+    font-weight: 500;
     
     mat-icon {
       color: #f44336;
+    }
+    
+    &:hover {
+      background-color: rgba(244, 67, 54, 0.08) !important;
     }
   }
 }
