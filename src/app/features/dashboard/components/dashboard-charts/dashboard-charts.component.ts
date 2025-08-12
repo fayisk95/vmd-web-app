@@ -77,16 +77,18 @@ export class DashboardChartsComponent implements OnInit, OnDestroy {
           tooltip: {
             callbacks: {
               label: (context) => {
+                const dataArray = context.dataset.data as number[];
+                let total = 0;
+                dataArray.forEach(num => total += num);
+
                 const label = context.label || '';
                 const value = context.parsed;
-                const total = context.dataset.data.reduce((a: number, b: number) => a + b);
                 const percentage = ((value / total) * 100).toFixed(1);
                 return `${label}: ${value} (${percentage}%)`;
               }
             }
           }
-        },
-        cutout: '60%'
+        }
       }
     };
 

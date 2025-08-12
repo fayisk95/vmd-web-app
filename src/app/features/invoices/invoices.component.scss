@@ -1,0 +1,35 @@
+@import '../../../styles/mixins';
+
+.invoices-container {
+  @include container-padding;
+}
+
+.invoices-header {
+  @include flex-between;
+  margin-bottom: 24px;
+  
+  h1 {
+    @include typography-headline;
+    margin: 0;
+  }
+  
+  button {
+    height: 40px;
+    
+    mat-icon {
+      margin-right: 8px;
+    }
+  }
+}
+
+@include mobile {
+  .invoices-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    
+    button {
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,168 @@
+<div class="invoice-detail-container">
+  <div class="detail-header">
+    <button mat-icon-button (click)="onBack()" matTooltip="Back to Invoices">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1>Invoice Details</h1>
+    <div class="header-actions">
+      <button mat-stroked-button (click)="onDownloadPDF()" [disabled]="actionLoading">
+        <mat-icon>download</mat-icon>
+        Download PDF
+      </button>
+      <button mat-stroked-button (click)="onSendEmail()" [disabled]="actionLoading">
+        <mat-icon>email</mat-icon>
+        Send Email
+      </button>
+      <button mat-raised-button color="primary" (click)="onEdit()" *ngIf="invoice">
+        <mat-icon>edit</mat-icon>
+        Edit Invoice
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading-container">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+
+  <div *ngIf="!loading && invoice" class="invoice-details">
+    <div class="detail-grid">
+      <!-- Invoice Header -->
+      <mat-card class="header-card">
+        <mat-card-content>
+          <div class="invoice-header">
+            <div class="invoice-info">
+              <h2>{{ invoice.invoiceNumber }}</h2>
+              <div class="status-section">
+                <mat-chip class="status-chip" [style.background-color]="getStatusColor(invoice.paymentStatus)"
+                  [style.color]="'white'">
+                  {{ invoice.paymentStatus }}
+                </mat-chip>
+                <div *ngIf="isOverdue()" class="overdue-warning">
+                  <mat-icon>warning</mat-icon>
+                  {{ getDaysOverdue() }} days overdue
+                </div>
+              </div>
+            </div>
+            <div class="amount-section">
+              <div class="total-amount">{{ invoice.totalAmount | currencyFormat }}</div>
+              <div class="amount-label">Total Amount</div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Client Information -->
+      <mat-card class="client-card">
+        <mat-card-header>
+          <mat-card-title>Client Information</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="client-info">
+            <div class="info-item">
+              <label>Client ID</label>
+              <span class="value">{{ invoice.clientId }}</span>
+            </div>
+            <div class="info-item">
+              <label>Name</label>
+              <span class="value">{{ invoice.clientName }}</span>
+            </div>
+            <div class="info-item">
+              <label>Email</label>
+              <a [href]="'mailto:' + invoice.clientEmail" class="email-link">{{ invoice.clientEmail }}</a>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Invoice Details -->
+      <mat-card class="details-card">
+        <mat-card-header>
+          <mat-card-title>Invoice Details</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="details-grid">
+            <div class="info-item">
+              <label>Issue Date</label>
+              <span class="value">{{ invoice.issueDate | date:'MMM dd, yyyy' }}</span>
+            </div>
+            <div class="info-item">
+              <label>Due Date</label>
+              <span class="value" [class.overdue]="isOverdue()">{{ invoice.dueDate | date:'MMM dd, yyyy' }}</span>
+            </div>
+            <div class="info-item">
+              <label>Payment Date</label>
+              <span class="value">{{ invoice.paymentDate ? (invoice.paymentDate | date:'MMM dd, yyyy') : 'Not paid'
+                }}</span>
+            </div>
+            <div class="info-item">
+              <label>Tax Rate</label>
+              <span class="value">{{ invoice.taxRate }}%</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Trip Items -->
+      <mat-card class="trips-card">
+        <mat-card-header>
+          <mat-card-title>Trip Items ({{ invoice.tripIds.length }})</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="trips-list">
+            <div class="trip-item" *ngFor="let tripId of invoice.tripIds">
+              <div class="trip-info">
+                <div class="trip-id">{{ tripId }}</div>
+                <div class="trip-description">Transportation Service</div>
+              </div>
+              <div class="trip-amount">
+                <!-- In a real app, you'd fetch individual trip amounts -->
+                {{ (invoice.subtotal / invoice.tripIds.length) | currencyFormat }}
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Payment Summary -->
+      <mat-card class="summary-card">
+        <mat-card-header>
+          <mat-card-title>Payment Summary</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="summary-details">
+            <div class="summary-row">
+              <span class="label">Subtotal:</span>
+              <span class="value">{{ invoice.subtotal | currencyFormat }}</span>
+            </div>
+            <div class="summary-row">
+              <span class="label">Tax ({{ invoice.taxRate }}%):</span>
+              <span class="value">{{ invoice.taxAmount | currencyFormat }}</span>
+            </div>
+            <div class="summary-row total">
+              <span class="label">Total:</span>
+              <span class="value">{{ invoice.totalAmount | currencyFormat }}</span>
+            </div>
+          </div>
+
+          <div class="payment-actions" *ngIf="invoice.paymentStatus !== 'Paid'">
+            <button mat-raised-button color="primary" (click)="onUpdatePaymentStatus(PaymentStatus.PAID)"
+              [disabled]="actionLoading">
+              <mat-icon>check_circle</mat-icon>
+              Mark as Paid
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Notes -->
+      <mat-card class="notes-card" *ngIf="invoice.notes">
+        <mat-card-header>
+          <mat-card-title>Notes</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p class="notes-content">{{ invoice.notes }}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

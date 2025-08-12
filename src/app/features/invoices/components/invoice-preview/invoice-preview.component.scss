@@ -1,0 +1,159 @@
+@import '../../../../../styles/mixins';
+
+.invoice-preview {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 24px;
+  font-family: 'Roboto', sans-serif;
+  
+  .preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #eee;
+    
+    h2 {
+      margin: 0;
+      color: #333;
+    }
+    
+    .invoice-number {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--mat-primary-color);
+    }
+  }
+  
+  .preview-content {
+    .company-info {
+      margin-bottom: 24px;
+      
+      h3 {
+        margin: 0 0 8px 0;
+        color: #333;
+        font-size: 20px;
+      }
+      
+      p {
+        margin: 4px 0;
+        color: #666;
+      }
+    }
+    
+    .client-info {
+      margin-bottom: 24px;
+      
+      h4 {
+        margin: 0 0 8px 0;
+        color: #333;
+      }
+      
+      p {
+        margin: 4px 0;
+        color: #666;
+      }
+    }
+    
+    .invoice-details {
+      margin-bottom: 24px;
+      
+      .detail-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        
+        .label {
+          font-weight: 500;
+          color: #666;
+        }
+        
+        .value {
+          color: #333;
+        }
+      }
+    }
+    
+    .items-section {
+      margin-bottom: 24px;
+      
+      h4 {
+        margin: 0 0 16px 0;
+        color: #333;
+      }
+      
+      .items-table {
+        .table-header {
+          display: flex;
+          justify-content: space-between;
+          font-weight: 600;
+          padding: 12px 0;
+          border-bottom: 2px solid #eee;
+          color: #333;
+        }
+        
+        .table-row {
+          display: flex;
+          justify-content: space-between;
+          padding: 12px 0;
+          border-bottom: 1px solid #f0f0f0;
+          color: #666;
+        }
+      }
+    }
+    
+    .totals-section {
+      margin-bottom: 24px;
+      
+      .total-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        
+        &.final-total {
+          font-weight: 600;
+          font-size: 18px;
+          color: #333;
+          border-top: 2px solid #eee;
+          padding-top: 12px;
+          margin-top: 12px;
+        }
+        
+        .label {
+          color: #666;
+        }
+        
+        .value {
+          color: #333;
+        }
+      }
+    }
+    
+    .notes-section {
+      h4 {
+        margin: 0 0 8px 0;
+        color: #333;
+      }
+      
+      p {
+        margin: 0;
+        color: #666;
+        line-height: 1.6;
+      }
+    }
+  }
+}
+
+@include mobile {
+  .invoice-preview {
+    padding: 16px;
+    
+    .preview-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+  }
+}

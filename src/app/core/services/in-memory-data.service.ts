@@ -3,6 +3,7 @@ import { InMemoryDbService } from 'angular-in-memory-web-api';
 import { Vehicle, VehicleType, VehicleCategory, VehicleStatus } from '../models/vehicle.model';
 import { Client } from '../models/client.model';
 import { Trip, TripStatus } from '../models/trip.model';
+import { Invoice, PaymentStatus } from '../models/invoice.model';
 
 @Injectable({
   providedIn: 'root'
@@ -217,6 +218,82 @@ export class InMemoryDataService implements InMemoryDbService {
       }
     ];
     
+    const invoices: Invoice[] = [
+      {
+        id: 1,
+        invoiceNumber: 'INV-001234',
+        tripIds: ['TRIP-001', 'TRIP-002'],
+        clientId: 'CLI-001',
+        clientName: 'John Smith',
+        clientEmail: 'john.smith@techsolutions.com',
+        issueDate: new Date('2024-02-01'),
+        dueDate: new Date('2024-03-03'),
+        subtotal: 335.00,
+        taxRate: 10,
+        taxAmount: 33.50,
+        totalAmount: 368.50,
+        paymentStatus: PaymentStatus.PAID,
+        paymentDate: new Date('2024-02-28'),
+        notes: 'Thank you for your business. Payment received on time.',
+        createdAt: new Date('2024-02-01T10:30:00'),
+        updatedAt: new Date('2024-02-28T14:20:00')
+      },
+      {
+        id: 2,
+        invoiceNumber: 'INV-001235',
+        tripIds: ['TRIP-003'],
+        clientId: 'CLI-003',
+        clientName: 'Michael Brown',
+        clientEmail: 'michael.brown@globalent.com',
+        issueDate: new Date('2024-02-05'),
+        dueDate: new Date('2024-03-07'),
+        subtotal: 450.00,
+        taxRate: 10,
+        taxAmount: 45.00,
+        totalAmount: 495.00,
+        paymentStatus: PaymentStatus.PENDING,
+        notes: 'Corporate transportation services for conference event.',
+        createdAt: new Date('2024-02-05T09:15:00'),
+        updatedAt: new Date('2024-02-05T09:15:00')
+      },
+      {
+        id: 3,
+        invoiceNumber: 'INV-001236',
+        tripIds: ['TRIP-004'],
+        clientId: 'CLI-004',
+        clientName: 'Emily Davis',
+        clientEmail: 'emily.davis@creativestudio.com',
+        issueDate: new Date('2024-01-20'),
+        dueDate: new Date('2024-02-19'),
+        subtotal: 45.00,
+        taxRate: 8.5,
+        taxAmount: 3.83,
+        totalAmount: 48.83,
+        paymentStatus: PaymentStatus.OVERDUE,
+        notes: 'Shopping trip service. Payment overdue.',
+        createdAt: new Date('2024-01-20T11:20:00'),
+        updatedAt: new Date('2024-02-20T16:35:00')
+      },
+      {
+        id: 4,
+        invoiceNumber: 'INV-001237',
+        tripIds: ['TRIP-005'],
+        clientId: 'CLI-005',
+        clientName: 'Robert Wilson',
+        clientEmail: 'robert.wilson@wilsonassoc.com',
+        issueDate: new Date('2024-02-18'),
+        dueDate: new Date('2024-03-20'),
+        subtotal: 180.00,
+        taxRate: 10,
+        taxAmount: 18.00,
+        totalAmount: 198.00,
+        paymentStatus: PaymentStatus.CANCELLED,
+        notes: 'Event cancelled due to weather conditions. Invoice cancelled.',
+        createdAt: new Date('2024-02-18T13:10:00'),
+        updatedAt: new Date('2024-02-19T10:45:00')
+      }
+    ];
+    
     const dashboard = {
       totalUsers: users.length,
       totalProducts: products.length,
@@ -224,7 +301,7 @@ export class InMemoryDataService implements InMemoryDbService {
       monthlyGrowth: 12.5
     };
 
-    return { users, products, vehicles, clients, trips, dashboard };
+    return { users, products, vehicles, clients, trips, invoices, dashboard };
   }
 
   genId(collection: any[]): number {

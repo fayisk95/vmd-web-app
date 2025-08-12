@@ -1,0 +1,11 @@
+<div class="invoices-container">
+  <div class="invoices-header">
+    <h1>Invoice Management</h1>
+    <button mat-raised-button color="primary" (click)="onCreateInvoice()">
+      <mat-icon>add</mat-icon>
+      Create Invoice
+    </button>
+  </div>
+
+  <app-invoice-list [invoices]="invoices$ | async"></app-invoice-list>
+</div>

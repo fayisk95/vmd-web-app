@@ -1,0 +1,69 @@
+<div class="invoice-preview" *ngIf="invoice">
+  <div class="preview-header">
+    <h2>Invoice Preview</h2>
+    <div class="invoice-number">{{ invoice.invoiceNumber }}</div>
+  </div>
+
+  <div class="preview-content">
+    <div class="company-info">
+      <h3>VMD System</h3>
+      <p>Vehicle Management Dashboard</p>
+      <p>Transportation Services</p>
+    </div>
+
+    <div class="client-info">
+      <h4>Bill To:</h4>
+      <p><strong>{{ invoice.clientName }}</strong></p>
+      <p>{{ invoice.clientEmail }}</p>
+    </div>
+
+    <div class="invoice-details">
+      <div class="detail-row">
+        <span class="label">Issue Date:</span>
+        <span class="value">{{ invoice.issueDate | date:'MMM dd, yyyy' }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">Due Date:</span>
+        <span class="value">{{ invoice.dueDate | date:'MMM dd, yyyy' }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">Status:</span>
+        <span class="value">{{ invoice.paymentStatus }}</span>
+      </div>
+    </div>
+
+    <div class="items-section">
+      <h4>Items</h4>
+      <div class="items-table">
+        <div class="table-header">
+          <span>Description</span>
+          <span>Amount</span>
+        </div>
+        <div class="table-row" *ngFor="let tripId of invoice.tripIds">
+          <span>Transportation Service - {{ tripId }}</span>
+          <span>{{ (invoice.subtotal / invoice.tripIds.length) | currencyFormat }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="totals-section">
+      <div class="total-row">
+        <span class="label">Subtotal:</span>
+        <span class="value">{{ invoice.subtotal | currencyFormat }}</span>
+      </div>
+      <div class="total-row">
+        <span class="label">Tax ({{ invoice.taxRate }}%):</span>
+        <span class="value">{{ invoice.taxAmount | currencyFormat }}</span>
+      </div>
+      <div class="total-row final-total">
+        <span class="label">Total:</span>
+        <span class="value">{{ invoice.totalAmount | currencyFormat }}</span>
+      </div>
+    </div>
+
+    <div class="notes-section" *ngIf="invoice.notes">
+      <h4>Notes</h4>
+      <p>{{ invoice.notes }}</p>
+    </div>
+  </div>
+</div>

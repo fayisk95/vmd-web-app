@@ -1,13 +1,14 @@
 <div class="dashboard-container">
   <h1>Dashboard</h1>
-  
+
   <div class="welcome-section" *ngIf="currentUser$ | async as currentUser">
     <mat-card class="welcome-card">
       <mat-card-content>
         <div class="welcome-content">
           <div class="welcome-text">
             <h2>Welcome back, {{ currentUser.name }}!</h2>
-            <p>You are logged in as <strong [style.color]="getRoleColor(currentUser.role)">{{ currentUser.role }}</strong></p>
+            <p>You are logged in as <strong [style.color]="getRoleColor(currentUser.role)">{{ currentUser.role
+                }}</strong></p>
           </div>
           <div class="user-avatar" *ngIf="currentUser.avatar">
             <img [src]="currentUser.avatar" [alt]="currentUser.name">
@@ -16,25 +17,22 @@
       </mat-card-content>
     </mat-card>
   </div>
-  
+
   <!-- Dashboard Stats -->
-  <app-dashboard-stats [stats]="dashboardStats" [loading]="loading"></app-dashboard-stats>
-  
+  <app-dashboard-stats [stats]="dashboardData" [loading]="loading"></app-dashboard-stats>
+
   <!-- Charts Section -->
   <app-dashboard-charts></app-dashboard-charts>
-  
+
   <!-- Vehicle Availability Calendar -->
   <div class="calendar-section">
     <h2>Vehicle Availability Calendar</h2>
-    <app-vehicle-availability-calendar 
-      [calendarData]="calendarData"
-      [loading]="calendarLoading"
-      (dateRangeChange)="onDateRangeChange($event)"
-      (filtersChange)="onFiltersChange($event)">
-    </app-vehicle-availability-calendar>
+    <!-- <app-vehicle-availability-calendar [calendarData]="calendarData" [loading]="calendarLoading"
+      (dateRangeChange)="onDateRangeChange($event)" (filtersChange)="onFiltersChange($event)">
+    </app-vehicle-availability-calendar> -->
   </div>
-  
-  <div *ngIf="loading && !dashboardStats" class="initial-loading">
+
+  <div *ngIf="loading && !dashboardData" class="initial-loading">
     <app-loading-spinner></app-loading-spinner>
   </div>
 </div>

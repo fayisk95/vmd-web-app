@@ -30,6 +30,11 @@
           <mat-icon>local_shipping</mat-icon>
           <span>Trips</span>
         </a>
+        <a mat-list-item routerLink="/invoices" routerLinkActive="active"
+           *ngIf="(currentUser$ | async)?.role === 'Admin' || (currentUser$ | async)?.role === 'Manager'">
+          <mat-icon>receipt</mat-icon>
+          <span>Invoices</span>
+        </a>
         <a mat-list-item routerLink="/users" routerLinkActive="active"
            *ngIf="(currentUser$ | async)?.role === 'Admin'">
           <mat-icon>people</mat-icon>

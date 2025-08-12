@@ -1,0 +1,176 @@
+@import '../../../../../styles/mixins';
+
+.invoice-form-container {
+  @include container-padding;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.form-header {
+  @include flex-between;
+  margin-bottom: 24px;
+  
+  h1 {
+    @include typography-headline;
+    margin: 0;
+  }
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
+
+.form-content {
+  .form-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+  }
+}
+
+.form-card,
+.preview-card {
+  @include card-elevation(2);
+}
+
+.invoice-form {
+  .form-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+    
+    .full-width {
+      flex: 1;
+    }
+    
+    .half-width {
+      flex: 0.5;
+    }
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #eee;
+    
+    button {
+      min-width: 120px;
+      
+      .spinning {
+        animation: spin 1s linear infinite;
+        margin-right: 8px;
+      }
+    }
+  }
+}
+
+.preview-content {
+  .trips-section {
+    margin-bottom: 24px;
+    
+    h4 {
+      margin: 0 0 16px 0;
+      font-size: 16px;
+      font-weight: 500;
+      color: #333;
+    }
+    
+    .trip-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #f0f0f0;
+      
+      &:last-child {
+        border-bottom: none;
+      }
+      
+      .trip-info {
+        flex: 1;
+        
+        .trip-id {
+          font-weight: 500;
+          margin-bottom: 4px;
+        }
+        
+        .trip-route {
+          font-size: 14px;
+          color: #666;
+          margin-bottom: 2px;
+        }
+        
+        .trip-date {
+          font-size: 12px;
+          color: #999;
+        }
+      }
+      
+      .trip-amount {
+        font-weight: 600;
+        color: #2e7d32;
+      }
+    }
+  }
+  
+  .totals-section {
+    border-top: 1px solid #eee;
+    padding-top: 16px;
+    
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      
+      &.total {
+        font-weight: 600;
+        font-size: 18px;
+        color: #333;
+        border-top: 1px solid #eee;
+        padding-top: 8px;
+        margin-top: 8px;
+      }
+      
+      .label {
+        color: #666;
+      }
+      
+      .value {
+        color: #333;
+      }
+    }
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@include tablet {
+  .form-content .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@include mobile {
+  .invoice-form {
+    .form-row {
+      flex-direction: column;
+      gap: 0;
+    }
+    
+    .form-actions {
+      flex-direction: column-reverse;
+      
+      button {
+        width: 100%;
+      }
+    }
+  }
+}

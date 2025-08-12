@@ -26,6 +26,12 @@ const routes: Routes = [
     data: { roles: [UserRole.ADMIN, UserRole.MANAGER] }
   },
   {
+    path: 'invoices',
+    loadChildren: () => import('./features/invoices/invoices.module').then(m => m.InvoicesModule),
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: [UserRole.ADMIN, UserRole.MANAGER] }
+  },
+  {
     path: 'users',
     loadChildren: () => import('./features/users/users.module').then(m => m.UsersModule),
     canActivate: [AuthGuard, RoleGuard],

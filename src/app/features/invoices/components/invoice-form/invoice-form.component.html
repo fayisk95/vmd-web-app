@@ -1,0 +1,126 @@
+<div class="invoice-form-container">
+  <div class="form-header">
+    <h1>{{ isEditMode ? 'Edit Invoice' : 'Create New Invoice' }}</h1>
+    <button mat-icon-button (click)="onCancel()" matTooltip="Cancel">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading-container">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+
+  <div class="form-content" *ngIf="!loading">
+    <div class="form-grid">
+      <!-- Form Section -->
+      <mat-card class="form-card">
+        <mat-card-header>
+          <mat-card-title>Invoice Details</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <form [formGroup]="invoiceForm" (ngSubmit)="onSubmit()" class="invoice-form">
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Select Trips</mat-label>
+                <mat-select formControlName="tripIds" multiple>
+                  <mat-option *ngFor="let trip of filteredTrips$ | async" [value]="trip.tripId">
+                    {{ displayTrip(trip) }} - {{ trip.price | currencyFormat }}
+                  </mat-option>
+                </mat-select>
+                <mat-hint>Select one or more completed trips</mat-hint>
+                <mat-error>{{ getFieldError('tripIds') }}</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Client</mat-label>
+                <mat-select formControlName="clientId">
+                  <mat-option *ngFor="let client of filteredClients$ | async" [value]="client.clientId">
+                    {{ displayClient(client) }}
+                  </mat-option>
+                </mat-select>
+                <mat-hint>Client will be auto-selected based on trips</mat-hint>
+                <mat-error>{{ getFieldError('clientId') }}</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>Due Date</mat-label>
+                <input matInput [matDatepicker]="dueDatePicker" formControlName="dueDate">
+                <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #dueDatePicker></mat-datepicker>
+                <mat-error>{{ getFieldError('dueDate') }}</mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>Tax Rate (%)</mat-label>
+                <input matInput type="number" formControlName="taxRate" min="0" max="100" step="0.1">
+                <span matSuffix>%</span>
+                <mat-error>{{ getFieldError('taxRate') }}</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Notes</mat-label>
+                <textarea matInput formControlName="notes" rows="3" placeholder="Additional notes..."></textarea>
+                <mat-hint>Optional additional information</mat-hint>
+              </mat-form-field>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="form-actions">
+              <button mat-button type="button" (click)="onCancel()" [disabled]="loading">
+                Cancel
+              </button>
+              <button mat-raised-button color="primary" type="submit" [disabled]="loading || invoiceForm.invalid">
+                <mat-icon *ngIf="loading" class="spinning">refresh</mat-icon>
+                <span *ngIf="!loading">{{ isEditMode ? 'Update Invoice' : 'Create Invoice' }}</span>
+                <span *ngIf="loading">{{ isEditMode ? 'Updating...' : 'Creating...' }}</span>
+              </button>
+            </div>
+          </form>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Preview Section -->
+      <mat-card class="preview-card" *ngIf="selectedTrips.length > 0">
+        <mat-card-header>
+          <mat-card-title>Invoice Preview</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="preview-content">
+            <div class="trips-section">
+              <h4>Selected Trips ({{ selectedTrips.length }})</h4>
+              <div class="trip-item" *ngFor="let trip of selectedTrips">
+                <div class="trip-info">
+                  <div class="trip-id">{{ trip.tripId }}</div>
+                  <div class="trip-route">{{ trip.pickupLocation }} → {{ trip.dropLocation }}</div>
+                  <div class="trip-date">{{ trip.pickupDateTime | date:'MMM dd, yyyy' }}</div>
+                </div>
+                <div class="trip-amount">{{ trip.price | currencyFormat }}</div>
+              </div>
+            </div>
+
+            <div class="totals-section">
+              <div class="total-row">
+                <span class="label">Subtotal:</span>
+                <span class="value">{{ getSubtotal() | currencyFormat }}</span>
+              </div>
+              <div class="total-row">
+                <span class="label">Tax ({{ invoiceForm.get('taxRate')?.value || 0 }}%):</span>
+                <span class="value">{{ getTaxAmount() | currencyFormat }}</span>
+              </div>
+              <div class="total-row total">
+                <span class="label">Total:</span>
+                <span class="value">{{ getTotal() | currencyFormat }}</span>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

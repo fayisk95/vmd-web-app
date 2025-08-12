@@ -1,0 +1,145 @@
+@import '../../../../../styles/mixins';
+
+.invoice-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.filters-card {
+  @include card-elevation(1);
+  
+  .filters-form {
+    .filter-row {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+      
+      mat-form-field {
+        flex: 1;
+        min-width: 200px;
+      }
+      
+      .clear-filters-btn {
+        height: 40px;
+        white-space: nowrap;
+        
+        mat-icon {
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+}
+
+.table-container {
+  @include card-elevation(2);
+  border-radius: 8px;
+  overflow: hidden;
+  
+  .loading-container {
+    padding: 40px;
+    text-align: center;
+  }
+}
+
+.invoices-table {
+  width: 100%;
+  
+  .client-info {
+    .client-name {
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+    
+    .client-email {
+      font-size: 12px;
+      color: #666;
+    }
+  }
+  
+  .due-date {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    
+    &.overdue {
+      color: #f44336;
+      font-weight: 500;
+    }
+    
+    .overdue-icon {
+      font-size: 16px;
+      color: #f44336;
+    }
+  }
+  
+  .amount-info {
+    .total-amount {
+      font-weight: 600;
+      color: #2e7d32;
+      margin-bottom: 2px;
+    }
+    
+    .trip-count {
+      font-size: 12px;
+      color: #666;
+    }
+  }
+  
+  .status-chip {
+    font-size: 11px;
+    font-weight: 500;
+    min-height: 24px;
+  }
+  
+  .actions-cell {
+    display: flex;
+    justify-content: center;
+    
+    button {
+      width: 32px;
+      height: 32px;
+    }
+  }
+  
+  .invoice-row {
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.02);
+    }
+  }
+}
+
+::ng-deep .mat-menu-panel {
+  .delete-action {
+    color: #f44336;
+    
+    mat-icon {
+      color: #f44336;
+    }
+  }
+}
+
+@include mobile {
+  .filters-card .filters-form .filter-row {
+    flex-direction: column;
+    align-items: stretch;
+    
+    mat-form-field {
+      min-width: auto;
+    }
+    
+    .clear-filters-btn {
+      width: 100%;
+    }
+  }
+  
+  .table-container {
+    overflow-x: auto;
+  }
+  
+  .invoices-table {
+    min-width: 900px;
+  }
+}

@@ -94,7 +94,7 @@
           <mat-icon>attach_money</mat-icon>
         </div>
         <div class="stat-info">
-          <div class="stat-value">{{ stats?.totalRevenue | currencyFormat }}</div>
+          <div *ngIf="stats&&stats.totalRevenue" class="stat-value">{{ stats.totalRevenue | currencyFormat }}</div>
           <div class="stat-label">Total Revenue</div>
         </div>
       </div>
