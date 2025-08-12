@@ -29,7 +29,7 @@
         <div class="preview-item">
           <span class="label">Sample Amount:</span>
           <span class="value">
-            {{ selectedCurrencySymbol }} 1,234.56
+            {{ selectedCurrencySymbol }}1,234.56
           </span>
         </div>
       </div>
@@ -55,16 +55,15 @@
         <div class="preview-calculation">
           <div class="calc-row">
             <span class="label">Subtotal:</span>
-            <span class="value">$100.00</span>
+            <span class="value">{{ selectedCurrencySymbol }}100.00</span>
           </div>
           <div class="calc-row">
             <span class="label">Tax ({{ generalForm.get('defaultTaxRate')?.value }}%):</span>
-            <span class="value">${{ (100 * (generalForm.get('defaultTaxRate')?.value || 0) / 100).toFixed(2) }}</span>
+            <span class="value">{{ selectedCurrencySymbol }}{{ (100 * (generalForm.get('defaultTaxRate')?.value || 0) / 100).toFixed(2) }}</span>
           </div>
           <div class="calc-row total">
             <span class="label">Total:</span>
-            <span class="value">${{ (100 + (100 * (generalForm.get('defaultTaxRate')?.value || 0) / 100)).toFixed(2)
-              }}</span>
+            <span class="value">{{ selectedCurrencySymbol }}{{ (100 + (100 * (generalForm.get('defaultTaxRate')?.value || 0) / 100)).toFixed(2) }}</span>
           </div>
         </div>
       </div>

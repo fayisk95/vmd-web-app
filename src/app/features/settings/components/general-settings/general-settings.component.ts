@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { takeUntil, finalize } from 'rxjs/operators';
+import { takeUntil, finalize, startWith } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { AppSettings, Currency, AVAILABLE_CURRENCIES } from '../../../../core/models/settings.model';
@@ -32,6 +32,7 @@ export class GeneralSettingsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initializeForm();
+    this.setupCurrencyPreview();
   }
 
   ngOnDestroy(): void {
@@ -58,6 +59,17 @@ export class GeneralSettingsComponent implements OnInit, OnDestroy {
         defaultTaxRate: this.settings.defaultTaxRate
       });
     }
+  }
+
+  private setupCurrencyPreview(): void {
+    this.generalForm.get('currency')?.valueChanges
+      .pipe(
+        takeUntil(this.destroy$),
+        startWith(this.generalForm.get('currency')?.value)
+      )
+      .subscribe(() => {
+        // Trigger change detection for currency preview
+      });
   }
 
   onSubmit(): void {

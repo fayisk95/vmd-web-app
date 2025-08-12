@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, of } from 'rxjs';
-import { map, tap, delay } from 'rxjs/operators';
+import { map, tap, delay, switchMap } from 'rxjs/operators';
 import { 
   AppSettings, 
   SettingsUpdateRequest, 
@@ -30,7 +30,17 @@ export class SettingsService {
   updateSettings(updates: SettingsUpdateRequest): Observable<AppSettings> {
     const currentSettings = this.settingsSubject.value;
     if (!currentSettings) {
-      throw new Error('No current settings available');
+      return this.getSettings().pipe(
+        switchMap(settings => {
+          const updatedSettings: AppSettings = {
+            ...settings,
+            ...updates,
+            updatedAt: new Date()
+          };
+          return this.http.put<AppSettings>(`${this.apiUrl}/1`, updatedSettings);
+        }),
+        tap(settings => this.settingsSubject.next(settings))
+      );
     }
 
     const updatedSettings: AppSettings = {

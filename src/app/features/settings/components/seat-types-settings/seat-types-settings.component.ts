@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter, OnDestroy } from '@angular/core
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, finalize } from 'rxjs/operators';
 
 import { SeatType } from '../../../../core/models/settings.model';
 import { SettingsService } from '../../services/settings.service';
@@ -86,17 +86,18 @@ export class SeatTypesSettingsComponent implements OnDestroy {
   private createSeatType(seatTypeData: Omit<SeatType, 'id'>): void {
     this.loading = true;
     this.settingsService.addSeatType(seatTypeData)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        takeUntil(this.destroy$),
+        finalize(() => this.loading = false)
+      )
       .subscribe({
         next: () => {
           this.snackBar.open('Seat type created successfully', 'Close', { duration: 3000 });
           this.settingsUpdated.emit();
-          this.loading = false;
         },
         error: (error) => {
           console.error('Error creating seat type:', error);
           this.snackBar.open('Error creating seat type', 'Close', { duration: 5000 });
-          this.loading = false;
         }
       });
   }
@@ -104,17 +105,18 @@ export class SeatTypesSettingsComponent implements OnDestroy {
   private updateSeatType(seatType: SeatType): void {
     this.loading = true;
     this.settingsService.updateSeatType(seatType)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        takeUntil(this.destroy$),
+        finalize(() => this.loading = false)
+      )
       .subscribe({
         next: () => {
           this.snackBar.open('Seat type updated successfully', 'Close', { duration: 3000 });
           this.settingsUpdated.emit();
-          this.loading = false;
         },
         error: (error) => {
           console.error('Error updating seat type:', error);
           this.snackBar.open('Error updating seat type', 'Close', { duration: 5000 });
-          this.loading = false;
         }
       });
   }
@@ -122,17 +124,18 @@ export class SeatTypesSettingsComponent implements OnDestroy {
   private deleteSeatType(seatType: SeatType): void {
     this.loading = true;
     this.settingsService.deleteSeatType(seatType.id)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        takeUntil(this.destroy$),
+        finalize(() => this.loading = false)
+      )
       .subscribe({
         next: () => {
           this.snackBar.open('Seat type deleted successfully', 'Close', { duration: 3000 });
           this.settingsUpdated.emit();
-          this.loading = false;
         },
         error: (error) => {
           console.error('Error deleting seat type:', error);
           this.snackBar.open('Error deleting seat type', 'Close', { duration: 5000 });
-          this.loading = false;
         }
       });
   }

@@ -31,7 +31,7 @@ export class CategoryFormDialogComponent {
     return this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
       description: ['', [Validators.required, Validators.minLength(10)]],
-      baseRate: ['', [Validators.required, Validators.min(0)]],
+      baseRate: ['', [Validators.required, Validators.min(0.01)]],
       multiplier: ['', [Validators.required, Validators.min(0.1), Validators.max(10)]],
       isActive: [true]
     });

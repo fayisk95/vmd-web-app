@@ -42,9 +42,9 @@ export class BusinessInfoSettingsComponent implements OnInit, OnDestroy {
     return this.fb.group({
       companyName: ['', [Validators.required, Validators.minLength(2)]],
       address: ['', [Validators.required, Validators.minLength(5)]],
-      phone: ['', [Validators.required, Validators.pattern(/^[\+]?[1-9][\d]{0,15}$/)]],
+      phone: ['', [Validators.required, Validators.pattern(/^[\+]?[0-9\s\-\(\)]{10,20}$/)]],
       email: ['', [Validators.required, Validators.email]],
-      website: ['', [Validators.pattern(/^https?:\/\/.+/)]],
+      website: ['', [Validators.pattern(/^https?:\/\/.+\..+/)]],
       taxId: ['']
     });
   }
@@ -98,10 +98,10 @@ export class BusinessInfoSettingsComponent implements OnInit, OnDestroy {
       }
       if (field.errors['pattern']) {
         if (fieldName === 'phone') {
-          return 'Please enter a valid phone number';
+          return 'Please enter a valid phone number with country code';
         }
         if (fieldName === 'website') {
-          return 'Please enter a valid website URL (http:// or https://)';
+          return 'Please enter a valid website URL starting with http:// or https://';
         }
         return `${this.getFieldLabel(fieldName)} format is invalid`;
       }

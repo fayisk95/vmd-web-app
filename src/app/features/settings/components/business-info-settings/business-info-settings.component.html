@@ -35,7 +35,7 @@
       <div class="form-row">
         <mat-form-field appearance="outline" class="half-width">
           <mat-label>Phone Number</mat-label>
-          <input matInput formControlName="phone" placeholder="+1 (555) 123-4567">
+          <input matInput type="tel" formControlName="phone" placeholder="+1 (555) 123-4567">
           <mat-icon matSuffix>phone</mat-icon>
           <mat-hint>Include country code for international numbers</mat-hint>
           <mat-error>{{ getFieldError('phone') }}</mat-error>
@@ -52,7 +52,7 @@
       <div class="form-row">
         <mat-form-field appearance="outline" class="half-width">
           <mat-label>Website</mat-label>
-          <input matInput formControlName="website" placeholder="https://www.company.com">
+          <input matInput type="url" formControlName="website" placeholder="https://www.company.com">
           <mat-icon matSuffix>language</mat-icon>
           <mat-hint>Optional - include https://</mat-hint>
           <mat-error>{{ getFieldError('website') }}</mat-error>

@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter, OnDestroy } from '@angular/core
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, finalize } from 'rxjs/operators';
 
 import { VehicleCategory } from '../../../../core/models/settings.model';
 import { SettingsService } from '../../services/settings.service';
@@ -86,17 +86,18 @@ export class CategoriesSettingsComponent implements OnDestroy {
   private createCategory(categoryData: Omit<VehicleCategory, 'id'>): void {
     this.loading = true;
     this.settingsService.addCategory(categoryData)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        takeUntil(this.destroy$),
+        finalize(() => this.loading = false)
+      )
       .subscribe({
         next: () => {
           this.snackBar.open('Category created successfully', 'Close', { duration: 3000 });
           this.settingsUpdated.emit();
-          this.loading = false;
         },
         error: (error) => {
           console.error('Error creating category:', error);
           this.snackBar.open('Error creating category', 'Close', { duration: 5000 });
-          this.loading = false;
         }
       });
   }
@@ -104,17 +105,18 @@ export class CategoriesSettingsComponent implements OnDestroy {
   private updateCategory(category: VehicleCategory): void {
     this.loading = true;
     this.settingsService.updateCategory(category)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        takeUntil(this.destroy$),
+        finalize(() => this.loading = false)
+      )
       .subscribe({
         next: () => {
           this.snackBar.open('Category updated successfully', 'Close', { duration: 3000 });
           this.settingsUpdated.emit();
-          this.loading = false;
         },
         error: (error) => {
           console.error('Error updating category:', error);
           this.snackBar.open('Error updating category', 'Close', { duration: 5000 });
-          this.loading = false;
         }
       });
   }
@@ -122,17 +124,18 @@ export class CategoriesSettingsComponent implements OnDestroy {
   private deleteCategory(category: VehicleCategory): void {
     this.loading = true;
     this.settingsService.deleteCategory(category.id)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        takeUntil(this.destroy$),
+        finalize(() => this.loading = false)
+      )
       .subscribe({
         next: () => {
           this.snackBar.open('Category deleted successfully', 'Close', { duration: 3000 });
           this.settingsUpdated.emit();
-          this.loading = false;
         },
         error: (error) => {
           console.error('Error deleting category:', error);
           this.snackBar.open('Error deleting category', 'Close', { duration: 5000 });
-          this.loading = false;
         }
       });
   }
