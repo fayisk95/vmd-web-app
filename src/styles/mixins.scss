@@ -1,16 +1,31 @@
-// Breakpoints
+// Enhanced breakpoints
 $mobile-breakpoint: 768px;
 $tablet-breakpoint: 1024px;
+$desktop-breakpoint: 1280px;
 
-// Spacing
+// Enhanced spacing system
 $base-spacing: 8px;
+$spacing-scale: (
+  xs: $base-spacing * 0.5,  // 4px
+  sm: $base-spacing,        // 8px
+  md: $base-spacing * 2,    // 16px
+  lg: $base-spacing * 3,    // 24px
+  xl: $base-spacing * 4,    // 32px
+  2xl: $base-spacing * 6,   // 48px
+  3xl: $base-spacing * 8    // 64px
+);
 
-// Typography
-$font-family-primary: 'Roboto', sans-serif;
+// Typography system
+$font-family-primary: 'Inter', 'Roboto', sans-serif;
+$font-weights: (
+  light: 300,
+  normal: 400,
+  medium: 500,
+  semibold: 600,
+  bold: 700
+);
 
-// Mixins
-
-// Responsive mixins
+// Enhanced responsive mixins
 @mixin mobile {
   @media (max-width: #{$mobile-breakpoint - 1px}) {
     @content;
@@ -29,7 +44,13 @@ $font-family-primary: 'Roboto', sans-serif;
   }
 }
 
-// Flex layout mixins
+@mixin large-desktop {
+  @media (min-width: #{$desktop-breakpoint}) {
+    @content;
+  }
+}
+
+// Enhanced flex layout mixins
 @mixin flex-center {
   display: flex;
   justify-content: center;
@@ -52,138 +73,176 @@ $font-family-primary: 'Roboto', sans-serif;
   flex-wrap: wrap;
 }
 
-// Grid layout mixins
-@mixin responsive-grid($columns, $gap: #{$base-spacing * 2}) {
+// Enhanced grid layout mixins
+@mixin responsive-grid($columns, $gap: map-get($spacing-scale, md)) {
   display: grid;
   grid-template-columns: $columns;
   gap: $gap;
   
   @include mobile {
     grid-template-columns: 1fr;
+    gap: map-get($spacing-scale, sm);
   }
 }
 
-// Button mixins
+@mixin auto-fit-grid($min-width: 280px, $gap: map-get($spacing-scale, lg)) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax($min-width, 1fr));
+  gap: $gap;
+  
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: map-get($spacing-scale, md);
+  }
+}
+
+// Enhanced button mixins
 @mixin button-base {
   border: none;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   cursor: pointer;
   font-family: $font-family-primary;
-  font-weight: 500;
-  transition: all 0.3s ease;
+  font-weight: map-get($font-weights, semibold);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 40px;
+  padding: 0 16px;
   
   &:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+    transform: none !important;
   }
 }
 
 @mixin button-primary {
   @include button-base;
-  background-color: var(--mat-primary-color);
+  background: var(--gradient-primary);
   color: white;
+  box-shadow: var(--shadow-md);
   
   &:hover:not(:disabled) {
-    background-color: var(--mat-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
   }
 }
 
 @mixin button-secondary {
   @include button-base;
   background-color: transparent;
-  border: 1px solid var(--mat-primary-color);
+  border: 2px solid var(--mat-primary-color);
   color: var(--mat-primary-color);
   
   &:hover:not(:disabled) {
     background-color: var(--mat-primary-color);
     color: white;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
   }
 }
 
-// Spacing mixins
-@mixin spacing($property, $multiplier: 1) {
-  #{$property}: #{$base-spacing * $multiplier};
+// Enhanced spacing mixins
+@mixin spacing($property, $size: md) {
+  #{$property}: map-get($spacing-scale, $size);
 }
 
 @mixin container-padding {
-  padding: #{$base-spacing * 3};
+  padding: map-get($spacing-scale, lg);
   
   @include mobile {
-    padding: #{$base-spacing * 2};
+    padding: map-get($spacing-scale, md);
   }
 }
 
-// Typography mixins
+// Enhanced typography mixins
 @mixin typography-base {
   font-family: $font-family-primary;
   line-height: 1.5;
+  color: var(--color-text-primary);
 }
 
 @mixin typography-headline {
   @include typography-base;
   font-size: 2rem;
-  font-weight: 400;
+  font-weight: map-get($font-weights, bold);
+  line-height: 1.2;
   margin: 0;
   
   @include mobile {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
   }
 }
 
 @mixin typography-title {
   @include typography-base;
-  font-size: 1.25rem;
-  font-weight: 500;
+  font-size: 1.5rem;
+  font-weight: map-get($font-weights, semibold);
+  line-height: 1.3;
+  margin: 0;
+  
+  @include mobile {
+    font-size: 1.25rem;
+  }
+}
+
+@mixin typography-subtitle {
+  @include typography-base;
+  font-size: 1.125rem;
+  font-weight: map-get($font-weights, medium);
+  line-height: 1.4;
   margin: 0;
 }
 
 @mixin typography-body {
   @include typography-base;
   font-size: 1rem;
-  font-weight: 400;
+  font-weight: map-get($font-weights, normal);
+  line-height: 1.6;
 }
 
 @mixin typography-caption {
   @include typography-base;
   font-size: 0.875rem;
-  font-weight: 400;
-  color: rgba(0, 0, 0, 0.6);
+  font-weight: map-get($font-weights, normal);
+  color: var(--color-text-secondary);
+  line-height: 1.4;
 }
 
-// Shadow mixins
+// Enhanced shadow mixins
 @mixin card-elevation($level: 1) {
   @if $level == 1 {
-    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-                0px 1px 1px 0px rgba(0, 0, 0, 0.14),
-                0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+    box-shadow: var(--shadow-sm);
   } @else if $level == 2 {
-    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
-                0px 2px 2px 0px rgba(0, 0, 0, 0.14),
-                0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+    box-shadow: var(--shadow-md);
   } @else if $level == 3 {
-    box-shadow: 0px 3px 3px -2px rgba(0, 0, 0, 0.2),
-                0px 3px 4px 0px rgba(0, 0, 0, 0.14),
-                0px 1px 8px 0px rgba(0, 0, 0, 0.12);
+    box-shadow: var(--shadow-lg);
   } @else if $level == 4 {
-    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
-                0px 4px 5px 0px rgba(0, 0, 0, 0.14),
-                0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+    box-shadow: var(--shadow-xl);
   }
 }
 
 @mixin hover-elevation {
-  transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   
   &:hover {
     @include card-elevation(4);
+    transform: translateY(-2px);
   }
 }
 
-// Animation mixins
-@mixin fade-in($duration: 0.3s) {
-  animation: fadeIn $duration ease-in-out;
+// Enhanced animation mixins
+@mixin fade-in($duration: 0.3s, $delay: 0s) {
+  animation: fadeIn $duration ease-out $delay both;
 }
 
+@mixin slide-in-up($duration: 0.4s, $delay: 0s) {
+  animation: slideInUp $duration cubic-bezier(0.4, 0, 0.2, 1) $delay both;
+}
+
+@mixin scale-in($duration: 0.3s, $delay: 0s) {
+  animation: scaleIn $duration cubic-bezier(0.4, 0, 0.2, 1) $delay both;
+}
+
+// Keyframes
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -191,10 +250,6 @@ $font-family-primary: 'Roboto', sans-serif;
   to {
     opacity: 1;
   }
-}
-
-@mixin slide-in-up($duration: 0.3s) {
-  animation: slideInUp $duration ease-in-out;
 }
 
 @keyframes slideInUp {
@@ -205,5 +260,74 @@ $font-family-primary: 'Roboto', sans-serif;
   to {
     transform: translateY(0);
     opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+// Form mixins
+@mixin form-field-enhanced {
+  .mat-form-field-outline {
+    border-radius: var(--radius-md) !important;
+    border-color: var(--color-divider) !important;
+  }
+  
+  .mat-form-field-outline-thick {
+    border-radius: var(--radius-md) !important;
+    border-color: var(--mat-primary-color) !important;
+  }
+  
+  .mat-form-field-label {
+    color: var(--color-text-secondary) !important;
+    font-weight: map-get($font-weights, medium) !important;
+  }
+  
+  &.mat-focused .mat-form-field-label {
+    color: var(--mat-primary-color) !important;
+  }
+}
+
+// Card mixins
+@mixin card-enhanced {
+  @include card-elevation(2);
+  border-radius: var(--radius-lg);
+  background: var(--gradient-surface);
+  border: 1px solid var(--color-divider);
+  overflow: hidden;
+  
+  &:hover {
+    @include hover-elevation;
+  }
+}
+
+// Status color mixins
+@mixin status-colors {
+  &.success {
+    color: var(--mat-success-color);
+    background-color: rgba(16, 185, 129, 0.1);
+  }
+  
+  &.warning {
+    color: #f59e0b;
+    background-color: rgba(245, 158, 11, 0.1);
+  }
+  
+  &.error {
+    color: var(--mat-warn-color);
+    background-color: rgba(239, 68, 68, 0.1);
+  }
+  
+  &.info {
+    color: var(--mat-info-color);
+    background-color: rgba(59, 130, 246, 0.1);
   }
 }

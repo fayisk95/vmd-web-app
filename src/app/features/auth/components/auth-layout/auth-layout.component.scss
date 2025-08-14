@@ -14,8 +14,11 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.05)"/><circle cx="20" cy="80" r="0.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-    opacity: 0.3;
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+    animation: float 20s ease-in-out infinite;
   }
 }
 
@@ -24,25 +27,25 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: map-get($spacing-scale, lg);
   position: relative;
   z-index: 2;
 }
 
 .auth-card {
-  background: white;
-  border-radius: 24px;
+  background: var(--color-background-card);
+  border-radius: var(--radius-xl);
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
   width: 100%;
-  max-width: 400px;
+  max-width: 440px;
   overflow: hidden;
-  animation: slideInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  @include scale-in(0.8s);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .auth-header {
-  padding: 32px 32px 24px;
+  padding: map-get($spacing-scale, 2xl) map-get($spacing-scale, 2xl) map-get($spacing-scale, lg);
   text-align: center;
   background: var(--gradient-primary);
   color: white;
@@ -62,48 +65,60 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 16px;
-    margin-bottom: 8px;
+    gap: map-get($spacing-scale, md);
+    margin-bottom: map-get($spacing-scale, sm);
     
     .logo-icon {
-      font-size: 36px;
-      width: 36px;
-      height: 36px;
+      font-size: 40px;
+      width: 40px;
+      height: 40px;
       filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+      animation: pulse 2s ease-in-out infinite;
     }
     
     h1 {
       margin: 0;
-      font-size: 28px;
-      font-weight: 700;
+      font-size: 2rem;
+      font-weight: 800;
       font-family: 'Inter', sans-serif;
       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      letter-spacing: -0.025em;
+      
+      @include mobile {
+        font-size: 1.75rem;
+      }
     }
   }
   
   .subtitle {
     margin: 0;
-    opacity: 0.9;
-    font-size: 16px;
-    font-weight: 400;
+    opacity: 0.95;
+    font-size: 1.125rem;
+    font-weight: map-get($font-weights, normal);
+    letter-spacing: 0.025em;
+    
+    @include mobile {
+      font-size: 1rem;
+    }
   }
 }
 
 .auth-content {
-  padding: 40px 32px;
+  padding: map-get($spacing-scale, 2xl);
+  background: var(--gradient-surface);
 }
 
 .auth-footer {
-  padding: 16px 32px;
+  padding: map-get($spacing-scale, md) map-get($spacing-scale, 2xl);
   text-align: center;
   background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
-  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  border-top: 1px solid var(--color-divider);
   
   p {
     margin: 0;
-    font-size: 13px;
-    color: #64748b;
-    font-weight: 500;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    font-weight: map-get($font-weights, medium);
   }
 }
 
@@ -116,54 +131,51 @@
   z-index: 1;
 }
 
-.background-pattern {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: 
-    radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
-  background-size: 100px 100px;
-  animation: float 20s ease-in-out infinite;
-}
-
-@keyframes slideInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
+// Enhanced animations
 @keyframes float {
   0%, 100% {
-    transform: translateY(0px);
+    transform: translateY(0px) rotate(0deg);
   }
-  50% {
-    transform: translateY(-20px);
+  33% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+  66% {
+    transform: translateY(5px) rotate(-1deg);
   }
 }
 
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+// Responsive design
 @include mobile {
   .auth-container {
-    padding: 16px;
+    padding: map-get($spacing-scale, md);
   }
   
   .auth-card {
     max-width: none;
+    margin: 0;
   }
   
   .auth-header,
   .auth-content {
-    padding: 24px;
+    padding: map-get($spacing-scale, xl);
   }
   
   .auth-footer {
-    padding: 12px 24px;
+    padding: map-get($spacing-scale, md) map-get($spacing-scale, xl);
+  }
+}
+
+@include tablet {
+  .auth-card {
+    max-width: 400px;
   }
 }

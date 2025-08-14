@@ -6,57 +6,67 @@
 
 .login-header {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: map-get($spacing-scale, 2xl);
   
   h2 {
-    margin: 0 0 8px 0;
-    font-size: 28px;
-    font-weight: 700;
-    color: #333;
+    margin: 0 0 map-get($spacing-scale, sm) 0;
+    font-size: 1.875rem;
+    font-weight: 800;
+    color: var(--color-text-primary);
     font-family: 'Inter', sans-serif;
+    letter-spacing: -0.025em;
+    
+    @include mobile {
+      font-size: 1.5rem;
+    }
   }
   
   p {
     margin: 0;
-    color: #666;
-    font-size: 16px;
-    font-weight: 400;
+    color: var(--color-text-secondary);
+    font-size: 1rem;
+    font-weight: map-get($font-weights, normal);
+    line-height: 1.5;
   }
 }
 
 .login-form {
-  margin-bottom: 32px;
+  margin-bottom: map-get($spacing-scale, 2xl);
   
   .full-width {
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: map-get($spacing-scale, lg);
     
-    ::ng-deep .mat-form-field-outline {
-      border-radius: 12px;
-    }
+    @include form-field-enhanced;
     
-    ::ng-deep .mat-form-field-outline-thick {
-      border-radius: 12px;
+    ::ng-deep .mat-form-field-wrapper {
+      padding-bottom: 0;
     }
   }
   
   .login-button {
     height: 52px;
-    font-size: 17px;
-    font-weight: 600;
-    margin-top: 12px;
-    border-radius: 12px;
+    font-size: 1.125rem;
+    font-weight: map-get($font-weights, bold);
+    margin-top: map-get($spacing-scale, md);
+    border-radius: var(--radius-md);
     background: var(--gradient-primary) !important;
-    box-shadow: 0 4px 16px rgba(63, 81, 181, 0.3);
+    box-shadow: 0 4px 16px rgba(79, 70, 229, 0.3);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    letter-spacing: 0.025em;
     
     &:hover:not(:disabled) {
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(63, 81, 181, 0.4);
+      box-shadow: 0 8px 24px rgba(79, 70, 229, 0.4);
+    }
+    
+    &:active:not(:disabled) {
+      transform: translateY(0);
     }
     
     .spinning {
       animation: spin 1s linear infinite;
+      margin-right: map-get($spacing-scale, sm);
     }
   }
 }
@@ -64,49 +74,75 @@
 .demo-section {
   .demo-title {
     text-align: center;
-    margin: 16px 0;
-    color: #666;
-    font-size: 15px;
-    font-weight: 600;
+    margin: map-get($spacing-scale, lg) 0 map-get($spacing-scale, md);
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+    font-weight: map-get($font-weights, semibold);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.1em;
+    position: relative;
+    
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 30%;
+      height: 1px;
+      background: var(--color-divider);
+    }
+    
+    &::before {
+      left: 0;
+    }
+    
+    &::after {
+      right: 0;
+    }
   }
   
   .demo-buttons {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: map-get($spacing-scale, md);
   }
   
   .demo-button {
     width: 100%;
-    padding: 16px 20px;
+    padding: map-get($spacing-scale, lg) map-get($spacing-scale, xl);
     height: auto;
-    border-radius: 12px;
-    border: 2px solid #e2e8f0;
+    border-radius: var(--radius-md);
+    border: 2px solid var(--color-divider);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--gradient-surface);
     
     .demo-button-content {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: map-get($spacing-scale, lg);
       width: 100%;
       
       .role-icon {
-        font-size: 24px;
-        width: 24px;
-        height: 24px;
+        font-size: 28px;
+        width: 28px;
+        height: 28px;
+        padding: map-get($spacing-scale, sm);
+        border-radius: var(--radius-sm);
+        background: rgba(255, 255, 255, 0.1);
         
         &.role-admin {
-          color: #f44336;
+          color: #ef4444;
+          background: rgba(239, 68, 68, 0.1);
         }
         
         &.role-manager {
-          color: #ff9800;
+          color: #f59e0b;
+          background: rgba(245, 158, 11, 0.1);
         }
         
         &.role-driver {
-          color: #4caf50;
+          color: #10b981;
+          background: rgba(16, 185, 129, 0.1);
         }
       }
       
@@ -117,24 +153,33 @@
         flex: 1;
         
         .role {
-          font-weight: 600;
-          font-size: 15px;
-          color: #333;
+          font-weight: map-get($font-weights, semibold);
+          font-size: 1rem;
+          color: var(--color-text-primary);
+          margin-bottom: 2px;
         }
         
         .email {
-          font-size: 13px;
-          color: #666;
-          font-weight: 400;
+          font-size: 0.875rem;
+          color: var(--color-text-secondary);
+          font-weight: map-get($font-weights, normal);
         }
       }
     }
     
-    &:hover {
-      background-color: #f8fafc;
+    &:hover:not(:disabled) {
+      background: var(--color-background-card);
       border-color: var(--mat-primary-color);
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+      
+      .demo-button-content .role-icon {
+        transform: scale(1.1);
+      }
+    }
+    
+    &:active:not(:disabled) {
+      transform: translateY(0);
     }
   }
 }
@@ -144,16 +189,34 @@
   100% { transform: rotate(360deg); }
 }
 
+// Enhanced responsive design
 @include mobile {
   .login-header {
-    margin-bottom: 24px;
-    
-    h2 {
-      font-size: 20px;
-    }
+    margin-bottom: map-get($spacing-scale, xl);
   }
   
   .login-form {
-    margin-bottom: 24px;
+    margin-bottom: map-get($spacing-scale, xl);
+    
+    .login-button {
+      height: 48px;
+      font-size: 1rem;
+    }
+  }
+  
+  .demo-section {
+    .demo-button {
+      padding: map-get($spacing-scale, md) map-get($spacing-scale, lg);
+      
+      .demo-button-content {
+        gap: map-get($spacing-scale, md);
+        
+        .role-icon {
+          font-size: 24px;
+          width: 24px;
+          height: 24px;
+        }
+      }
+    }
   }
 }

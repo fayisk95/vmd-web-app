@@ -2,40 +2,59 @@
 
 .dashboard-container {
   @include container-padding;
+  max-width: 1400px;
+  margin: 0 auto;
   
   h1 {
     @include typography-headline;
-    margin-bottom: 24px;
+    margin-bottom: map-get($spacing-scale, lg);
     background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    font-weight: 700;
+    font-weight: 800;
+    text-align: center;
+    
+    @include mobile {
+      font-size: 1.5rem;
+      margin-bottom: map-get($spacing-scale, md);
+    }
   }
 }
 
 .welcome-section {
-  margin-bottom: 32px;
+  margin-bottom: map-get($spacing-scale, 2xl);
+  @include fade-in(0.6s);
 }
 
 .welcome-card {
-  @include card-elevation(3);
+  @include card-elevation(4);
   background: var(--gradient-primary);
   color: white;
-  border-radius: 20px;
+  border-radius: var(--radius-xl);
   overflow: hidden;
   position: relative;
   
   &::before {
     content: '';
     position: absolute;
-    top: 0;
-    right: 0;
+    top: -50%;
+    right: -20%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -10%;
     width: 200px;
     height: 200px;
     background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
     border-radius: 50%;
-    transform: translate(50%, -50%);
   }
   
   .welcome-content {
@@ -44,66 +63,121 @@
     justify-content: space-between;
     position: relative;
     z-index: 2;
+    padding: map-get($spacing-scale, 2xl);
     
     .welcome-text {
+      flex: 1;
+      
       h2 {
-        margin: 0 0 8px 0;
-        font-size: 28px;
-        font-weight: 700;
+        margin: 0 0 map-get($spacing-scale, sm) 0;
+        font-size: 2rem;
+        font-weight: 800;
         font-family: 'Inter', sans-serif;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        
+        @include mobile {
+          font-size: 1.5rem;
+        }
       }
       
       p {
         margin: 0;
-        opacity: 0.9;
-        font-size: 16px;
+        opacity: 0.95;
+        font-size: 1.125rem;
+        font-weight: map-get($font-weights, normal);
         
         strong {
-          background: rgba(255, 255, 255, 0.2);
-          padding: 4px 12px;
-          border-radius: 16px;
-          font-weight: 600;
+          background: rgba(255, 255, 255, 0.25);
+          padding: map-get($spacing-scale, xs) map-get($spacing-scale, md);
+          border-radius: var(--radius-lg);
+          font-weight: map-get($font-weights, semibold);
           backdrop-filter: blur(10px);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        @include mobile {
+          font-size: 1rem;
         }
       }
     }
     
     .user-avatar {
       img {
-        width: 80px;
-        height: 80px;
+        width: 100px;
+        height: 100px;
         border-radius: 50%;
         border: 4px solid rgba(255, 255, 255, 0.3);
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease;
+        
+        &:hover {
+          transform: scale(1.05);
+        }
+        
+        @include mobile {
+          width: 80px;
+          height: 80px;
+        }
       }
     }
   }
 }
 
 .calendar-section {
-  margin-top: 32px;
+  margin-top: map-get($spacing-scale, 2xl);
+  @include slide-in-up(0.6s, 0.3s);
   
   h2 {
     @include typography-title;
-    margin-bottom: 24px;
-    color: #333;
+    margin-bottom: map-get($spacing-scale, lg);
+    color: var(--color-text-primary);
+    text-align: center;
   }
 }
 
 .initial-loading {
   display: flex;
   justify-content: center;
-  padding: 40px;
+  padding: map-get($spacing-scale, 3xl);
 }
 
+// Enhanced responsive design
 @include mobile {
   .welcome-card .welcome-content {
     flex-direction: column;
     text-align: center;
-    gap: 16px;
+    gap: map-get($spacing-scale, lg);
+    padding: map-get($spacing-scale, xl);
     
-    .welcome-text h2 {
-      font-size: 20px;
+    .welcome-text {
+      order: 2;
+    }
+    
+    .user-avatar {
+      order: 1;
     }
   }
+}
+
+@include tablet {
+  .dashboard-container {
+    padding: map-get($spacing-scale, xl);
+  }
+}
+
+// Animation delays for staggered entrance
+.welcome-section {
+  animation-delay: 0.1s;
+}
+
+:host ::ng-deep app-dashboard-stats {
+  animation-delay: 0.2s;
+}
+
+:host ::ng-deep app-dashboard-charts {
+  animation-delay: 0.3s;
+}
+
+.calendar-section {
+  animation-delay: 0.4s;
 }

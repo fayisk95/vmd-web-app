@@ -1,18 +1,22 @@
+@import '../../../../styles/mixins';
+
 .user-avatar {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  background: var(--gradient-surface);
   border: 2px solid rgba(255, 255, 255, 0.3);
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-sm);
   
   &:hover {
     transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow-md);
+    border-color: rgba(255, 255, 255, 0.5);
   }
   
   .avatar-image {
@@ -22,50 +26,54 @@
   }
   
   mat-icon {
-    font-size: 20px;
-    width: 20px;
-    height: 20px;
-    color: #666;
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+    color: var(--color-text-secondary);
   }
 }
 
 ::ng-deep .user-menu {
-  border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--color-divider);
+  min-width: 280px;
   
   .user-info {
-    padding: 20px !important;
+    padding: map-get($spacing-scale, xl) !important;
     cursor: default !important;
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    background: var(--gradient-surface);
+    border-bottom: 1px solid var(--color-divider);
     
     &:hover {
-      background-color: transparent !important;
+      background: var(--gradient-surface) !important;
     }
   }
   
   .user-details {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: map-get($spacing-scale, xs);
     
     .user-name {
-      font-weight: 600;
-      font-size: 15px;
-      color: #333;
+      font-weight: map-get($font-weights, bold);
+      font-size: 1.125rem;
+      color: var(--color-text-primary);
       font-family: 'Inter', sans-serif;
+      margin-bottom: 2px;
     }
     
     .user-email {
-      font-size: 13px;
-      color: #666;
+      font-size: 0.875rem;
+      color: var(--color-text-secondary);
+      font-weight: map-get($font-weights, normal);
     }
     
     .user-role {
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-top: 4px;
+      gap: map-get($spacing-scale, sm);
+      margin-top: map-get($spacing-scale, xs);
       
       .role-icon {
         font-size: 18px;
@@ -74,27 +82,81 @@
       }
       
       span {
-        font-size: 13px;
-        font-weight: 600;
-        padding: 2px 8px;
-        border-radius: 8px;
-        background: rgba(255, 255, 255, 0.8);
+        font-size: 0.75rem;
+        font-weight: map-get($font-weights, semibold);
+        padding: map-get($spacing-scale, xs) map-get($spacing-scale, sm);
+        border-radius: var(--radius-sm);
+        background: rgba(255, 255, 255, 0.9);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        box-shadow: var(--shadow-sm);
       }
     }
   }
   
   .mat-menu-item {
-    padding: 12px 20px !important;
-    font-weight: 500;
+    padding: map-get($spacing-scale, md) map-get($spacing-scale, xl) !important;
+    font-weight: map-get($font-weights, medium);
     transition: all 0.2s ease;
+    min-height: 48px;
+    border-radius: var(--radius-sm);
+    margin: 0 map-get($spacing-scale, sm);
     
     &:hover {
-      background-color: #f8fafc !important;
+      background-color: var(--color-background-hover) !important;
+      transform: translateX(2px);
     }
     
     mat-icon {
-      margin-right: 12px;
-      color: #666;
+      margin-right: map-get($spacing-scale, md);
+      color: var(--color-text-secondary);
+      transition: color 0.2s ease;
+    }
+    
+    &:hover mat-icon {
+      color: var(--mat-primary-color);
+    }
+    
+    span {
+      font-size: 0.9375rem;
+      color: var(--color-text-primary);
+    }
+  }
+  
+  .mat-divider {
+    margin: map-get($spacing-scale, sm) 0;
+    border-color: var(--color-divider);
+  }
+}
+
+// Enhanced responsive design
+@include mobile {
+  .user-avatar {
+    width: 36px;
+    height: 36px;
+    
+    mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+  
+  ::ng-deep .user-menu {
+    min-width: 260px;
+    
+    .user-info {
+      padding: map-get($spacing-scale, lg) !important;
+    }
+    
+    .user-details {
+      .user-name {
+        font-size: 1rem;
+      }
+      
+      .user-email {
+        font-size: 0.8125rem;
+      }
     }
   }
 }

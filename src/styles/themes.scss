@@ -1,6 +1,6 @@
 @use '@angular/material' as mat;
 
-// Define the palettes
+// Define the palettes with better colors
 $primary-palette: mat.define-palette(mat.$indigo-palette, 600);
 $accent-palette: mat.define-palette(mat.$pink-palette, A200, A100, A400);
 $warn-palette: mat.define-palette(mat.$red-palette);
@@ -21,47 +21,70 @@ $app-theme: mat.define-light-theme((
 // Apply the theme
 @include mat.all-component-themes($app-theme);
 
-// Custom theme variables
+// Enhanced custom theme variables
 :root {
-  --mat-primary-color: #3f51b5;
-  --mat-primary-dark: #303f9f;
-  --mat-primary-light: #7986cb;
-  --mat-accent-color: #e91e63;
-  --mat-warn-color: #f44336;
-  --mat-success-color: #4caf50;
-  --mat-info-color: #2196f3;
+  --mat-primary-color: #4f46e5;
+  --mat-primary-dark: #4338ca;
+  --mat-primary-light: #818cf8;
+  --mat-accent-color: #ec4899;
+  --mat-warn-color: #ef4444;
+  --mat-success-color: #10b981;
+  --mat-info-color: #3b82f6;
   
-  // Neutral colors
-  --color-text-primary: rgba(0, 0, 0, 0.87);
-  --color-text-secondary: rgba(0, 0, 0, 0.6);
-  --color-text-disabled: rgba(0, 0, 0, 0.38);
-  --color-divider: rgba(0, 0, 0, 0.12);
+  // Enhanced neutral colors
+  --color-text-primary: #1f2937;
+  --color-text-secondary: #6b7280;
+  --color-text-disabled: #9ca3af;
+  --color-divider: #e5e7eb;
   
-  // Background colors
+  // Enhanced background colors
   --color-background-primary: #f8fafc;
   --color-background-card: #ffffff;
-  --color-background-hover: rgba(0, 0, 0, 0.04);
+  --color-background-hover: rgba(79, 70, 229, 0.04);
   
-  // Gradients
-  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  --gradient-success: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  // Enhanced gradients
+  --gradient-primary: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  --gradient-secondary: linear-gradient(135deg, #ec4899 0%, #f97316 100%);
+  --gradient-success: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+  --gradient-surface: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  
+  // Shadow system
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  
+  // Border radius system
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  
+  // Spacing system
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
 }
 
-// Dark theme (optional)
+// Dark theme support
 @media (prefers-color-scheme: dark) {
   :root {
-    --mat-primary-color: #7986cb;
-    --mat-primary-dark: #5c6bc0;
-    --mat-primary-light: #9fa8da;
+    --mat-primary-color: #818cf8;
+    --mat-primary-dark: #6366f1;
+    --mat-primary-light: #a5b4fc;
     
-    --color-text-primary: rgba(255, 255, 255, 0.87);
-    --color-text-secondary: rgba(255, 255, 255, 0.6);
-    --color-text-disabled: rgba(255, 255, 255, 0.38);
-    --color-divider: rgba(255, 255, 255, 0.12);
+    --color-text-primary: #f9fafb;
+    --color-text-secondary: #d1d5db;
+    --color-text-disabled: #9ca3af;
+    --color-divider: #374151;
     
-    --color-background-primary: #1a202c;
-    --color-background-card: #2d3748;
-    --color-background-hover: rgba(255, 255, 255, 0.04);
+    --color-background-primary: #111827;
+    --color-background-card: #1f2937;
+    --color-background-hover: rgba(129, 140, 248, 0.08);
+    
+    --gradient-surface: linear-gradient(135deg, #1f2937 0%, #111827 100%);
   }
 }

@@ -6,29 +6,45 @@
 }
 
 .sidenav {
-  width: 250px;
-  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-  border-right: 1px solid rgba(0, 0, 0, 0.06);
+  width: 280px;
+  background: var(--gradient-surface);
+  border-right: 1px solid var(--color-divider);
+  box-shadow: var(--shadow-lg);
   
   .mat-toolbar {
-    background: inherit;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-    font-weight: 600;
-    color: #1a202c;
+    background: var(--gradient-primary) !important;
+    color: white !important;
+    border-bottom: none;
+    font-weight: 700;
+    font-size: 18px;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
+    }
   }
   
   .mat-nav-list {
-    padding-top: 16px;
+    padding-top: map-get($spacing-scale, lg);
     
     .mat-list-item {
-      margin: 4px 12px;
-      border-radius: 12px;
+      margin: map-get($spacing-scale, xs) map-get($spacing-scale, md);
+      border-radius: var(--radius-md);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      min-height: 48px;
       
       &.active {
-        background: linear-gradient(135deg, var(--mat-primary-color) 0%, var(--mat-primary-dark) 100%);
+        background: var(--gradient-primary);
         color: white;
-        box-shadow: 0 4px 12px rgba(63, 81, 181, 0.3);
+        box-shadow: 0 4px 16px rgba(79, 70, 229, 0.3);
+        transform: translateX(4px);
         
         .mat-icon {
           color: white;
@@ -36,36 +52,40 @@
         
         span {
           color: white;
-          font-weight: 500;
+          font-weight: map-get($font-weights, semibold);
         }
       }
       
       &:hover:not(.active) {
-        background-color: rgba(63, 81, 181, 0.08);
-        transform: translateX(4px);
+        background-color: var(--color-background-hover);
+        transform: translateX(2px);
+        box-shadow: var(--shadow-sm);
       }
       
       .mat-icon {
-        margin-right: 16px;
-        transition: color 0.3s ease;
+        margin-right: map-get($spacing-scale, md);
+        transition: all 0.3s ease;
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+        color: var(--color-text-secondary);
       }
       
       span {
-        font-weight: 500;
-        transition: color 0.3s ease;
+        font-weight: map-get($font-weights, medium);
+        transition: all 0.3s ease;
+        color: var(--color-text-primary);
       }
     }
   }
 }
 
-.sidenav .mat-toolbar {
-  background: inherit;
-}
-
 .mat-toolbar {
   background: var(--gradient-primary) !important;
   color: white !important;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  z-index: 10;
   
   .spacer {
     flex: 1 1 auto;
@@ -76,8 +96,9 @@
   }
   
   span {
-    font-weight: 600;
-    font-size: 18px;
+    font-weight: map-get($font-weights, bold);
+    font-size: 20px;
+    font-family: 'Inter', sans-serif;
   }
 }
 
@@ -93,10 +114,11 @@
     top: 0;
     left: 0;
     right: 0;
-    height: 200px;
+    height: 120px;
     background: var(--gradient-primary);
-    opacity: 0.05;
+    opacity: 0.03;
     z-index: 0;
+    border-radius: 0 0 24px 24px;
   }
   
   > * {
@@ -108,11 +130,12 @@
 .is-mobile {
   .sidenav {
     width: 100vw;
-    background: white;
+    background: var(--color-background-card);
+    box-shadow: none;
   }
   
   .main-content {
-    padding: 8px;
+    padding: map-get($spacing-scale, md);
   }
 }
 
@@ -120,4 +143,40 @@
   width: 100%;
   height: 100vh;
   overflow: auto;
+  background: var(--gradient-primary);
+}
+
+// Enhanced animations
+.sidenav {
+  @include fade-in(0.4s);
+}
+
+.main-content > * {
+  @include slide-in-up(0.5s, 0.1s);
+}
+
+// Responsive enhancements
+@include mobile {
+  .sidenav {
+    width: 100vw;
+    
+    .mat-nav-list .mat-list-item {
+      margin: map-get($spacing-scale, xs) map-get($spacing-scale, sm);
+      min-height: 44px;
+      
+      .mat-icon {
+        margin-right: map-get($spacing-scale, sm);
+      }
+    }
+  }
+  
+  .mat-toolbar span {
+    font-size: 18px;
+  }
+}
+
+@include tablet {
+  .sidenav {
+    width: 260px;
+  }
 }
