@@ -10,6 +10,7 @@ import { AppSettings, SeatType, BusinessInfo, Currency } from '../models/setting
   providedIn: 'root'
 })
 export class InMemoryDataService implements InMemoryDbService {
+
   createDb() {
     const users = [
       { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Admin' },
@@ -387,7 +388,7 @@ export class InMemoryDataService implements InMemoryDbService {
       monthlyGrowth: 12.5
     };
 
-    return { users, products, vehicles, clients, trips, invoices, dashboard, settings };
+    return { users, products, vehicles, clients, trips, invoices, dashboard: [dashboard], settings: [settings] };
   }
 
   genId(collection: any[]): number {

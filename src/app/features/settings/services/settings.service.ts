@@ -22,7 +22,8 @@ export class SettingsService {
   constructor(private http: HttpClient) {}
 
   getSettings(): Observable<AppSettings> {
-    return this.http.get<AppSettings>(`${this.apiUrl}/1`).pipe(
+    return this.http.get<AppSettings[]>(this.apiUrl).pipe(
+      map(settingsArray => settingsArray[0]), // Get the first (and only) settings record
       tap(settings => this.settingsSubject.next(settings))
     );
   }
@@ -37,7 +38,7 @@ export class SettingsService {
             ...updates,
             updatedAt: new Date()
           };
-          return this.http.put<AppSettings>(`${this.apiUrl}/1`, updatedSettings);
+          return this.http.put<AppSettings>(`${this.apiUrl}/${settings.id}`, updatedSettings);
         }),
         tap(settings => this.settingsSubject.next(settings))
       );
@@ -49,7 +50,7 @@ export class SettingsService {
       updatedAt: new Date()
     };
 
-    return this.http.put<AppSettings>(`${this.apiUrl}/1`, updatedSettings).pipe(
+    return this.http.put<AppSettings>(`${this.apiUrl}/${currentSettings.id}`, updatedSettings).pipe(
       tap(settings => this.settingsSubject.next(settings))
     );
   }
